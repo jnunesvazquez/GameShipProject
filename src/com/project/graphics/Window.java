@@ -2,6 +2,8 @@ package com.project.graphics;
 
 import com.project.input.KeyBoard;
 
+import com.project.states.GameState;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -22,7 +24,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
     private double TARGETTIME = 1000000000/FPS;                 //Variable que indica el tiempo necesario para aumentar un fotograma
     private double delta = 0;                                   //Variable que almacena el tiempo transcurrido dentro de nuestro juego
     private int AVERAGEFPS = FPS;                               //Variable que indica a cuantos FPS funciona nuestro juego en un momento
-
+    private GameState gameState;
 
     /**
      * Constructor de nuestra ventana
@@ -36,7 +38,6 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
         setVisible(true);                                       //Metodo para que la ventana sea visible
 
         canvas = new Canvas();
-        keyBoard = new KeyBoard();
 
         canvas.setPreferredSize(new Dimension(WIDTH, HEIGTH));  //Metodo que define el tamaño de nuestro rectangulo
         canvas.setMaximumSize(new Dimension(WIDTH, HEIGTH));    //Metodo que define el tamaño maximo de nuestro rectangulo
@@ -52,6 +53,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
      */
     public void update() {
         keyBoard.update();
+        gameState.update();
     }
 
     /**
@@ -61,11 +63,6 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
         bs = canvas.getBufferStrategy();                        //Le pasamos al canvas el buffer strategy pero nos devuelve un nulo
         if (bs == null) {
             canvas.createBufferStrategy(3);
-            return;
-        }
-        g = bs.getDrawGraphics();
-        if (bs == null) {                                       //Creamos este condicional para utilizar varios buffer en caso de que los necesitemos
-            canvas.createBufferStrategy(2);                   //Esto utiliza un la cantidad de buffers que pasemos como parametro y lo devuelve para evitar errores
             return;
         }
         g = bs.getDrawGraphics();
@@ -89,6 +86,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
      */
     private void init(){
         Assets.init();
+        gameState=new GameState();
     }
 
     /**
