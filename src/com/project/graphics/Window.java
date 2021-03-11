@@ -15,6 +15,11 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
     private Canvas canvas;                                      //Instanciamos la clase canvas que nos permite dibujar sobre nuestra ventana o incluso captar eventos de teclado
     private Thread thread;                                      //Instanciamos la clase de hilos para crear un subproceso en el metodo run()
 
+    private final int FPS = 60;
+    private double TARGETTIME = 1000000000/FPS;                 //Variable que indica el tiempo necesario para aumentar un fotograma
+    private double delta = 0;                                   //Variable que almacena el tiempo transcurrido dentro de nuestro juego
+    private int AVERAGEFPS = FPS;                               //Variable que indica a cuantos FPS funciona nuestro juego en un momento
+
     /**
      * Constructor de nuestra ventana
      */
@@ -35,27 +40,61 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
 
         add(canvas);
     }
+    private int x = -100;
 
+    /**
+     * Metodo que nos permite actualizar los fotogramas de nuestros juego
+     */
     public void update(){
-
+        x++;
     }
 
     public void draw(){
         bs = canvas.getBufferStrategy();                        //Le pasamos al canvas el buffer strategy pero nos devuelve un nulo
-        if (bs == null) {
-            canvas.createBufferStrategy(3);
+        if (bs == null) {                                       //Creamos este condicional para utilizar varios buffer en caso de que los necesitemos
+            canvas.createBufferStrategy(2);                   //Esto utiliza un la cantidad de buffers que pasemos como parametro y lo devuelve para evitar errores
             return;
         }
         g = bs.getDrawGraphics();
+        //------------------------------
+        //Aqui dibujamos
+        g.clearRect(0, 0, WIDTH, HEIGTH);
+
+        g.drawRect(x, 0, 100, 100);
+
+        g.setColor(Color.BLACK);
+
+        g.drawString("" + AVERAGEFPS, 10, 10);
+
+        //------------------------------
         g.dispose();
         bs.show();
     }
 
     @Override
     public void run() {
+        long now;                                               //Variable que registra el tiempo
+        long lastTime = System.nanoTime();                      //Variable que nos devuelve la hora exacta del sistema en nanosegundos
+        int frames = 0;
+        long time = 0;
+
+        //este bucle restringe el tiempo a 60 fps
         while (running){
-            update();
-            draw();
+            now = System.nanoTime();
+            delta += (now - lastTime) / TARGETTIME;                          //Sumamos el tiempo que haya pasado hasta este momento
+            time += (now - lastTime);
+            lastTime = now;
+            if (delta >= 1){
+                update();
+                draw();
+                delta--;
+                frames++;
+            }
+            if (time >= 1000000000){
+                AVERAGEFPS = frames;
+                frames = 0;
+                time = 0;
+            }
         }
         stop();
     }
