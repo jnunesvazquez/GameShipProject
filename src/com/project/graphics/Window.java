@@ -1,5 +1,7 @@
 package com.project.graphics;
 
+import com.project.input.KeyBoard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -14,11 +16,13 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
 
     private Canvas canvas;                                      //Instanciamos la clase canvas que nos permite dibujar sobre nuestra ventana o incluso captar eventos de teclado
     private Thread thread;                                      //Instanciamos la clase de hilos para crear un subproceso en el metodo run()
+    private KeyBoard keyBoard;
 
     private final int FPS = 60;
     private double TARGETTIME = 1000000000/FPS;                 //Variable que indica el tiempo necesario para aumentar un fotograma
     private double delta = 0;                                   //Variable que almacena el tiempo transcurrido dentro de nuestro juego
     private int AVERAGEFPS = FPS;                               //Variable que indica a cuantos FPS funciona nuestro juego en un momento
+
 
     /**
      * Constructor de nuestra ventana
@@ -32,6 +36,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
         setVisible(true);                                       //Metodo para que la ventana sea visible
 
         canvas = new Canvas();
+        keyBoard = new KeyBoard();
 
         canvas.setPreferredSize(new Dimension(WIDTH, HEIGTH));  //Metodo que define el tamaño de nuestro rectangulo
         canvas.setMaximumSize(new Dimension(WIDTH, HEIGTH));    //Metodo que define el tamaño maximo de nuestro rectangulo
@@ -39,15 +44,14 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
         canvas.setFocusable(true);                              //Metodo que permita interactuar con el rectangulo
 
         add(canvas);
+        canvas.addKeyListener(keyBoard);
     }
-
-    private int x = 0;
 
     /**
      * Metodo que nos permite actualizar los fotogramas de nuestros juego
      */
     public void update() {
-        x++;
+        keyBoard.update();
     }
 
     /**
