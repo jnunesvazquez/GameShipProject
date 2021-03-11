@@ -1,8 +1,10 @@
 package com.project.main;
 
-public class Main{
+import com.project.graphics.*;
+
+public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+	    new Window().start();
     }
 }
