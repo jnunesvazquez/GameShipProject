@@ -40,17 +40,26 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
 
         add(canvas);
     }
-    private int x = -100;
+
+    private int x = 0;
 
     /**
      * Metodo que nos permite actualizar los fotogramas de nuestros juego
      */
-    public void update(){
+    public void update() {
         x++;
     }
 
+    /**
+     * Metodo para dibujar con doble buffering
+     */
     public void draw(){
         bs = canvas.getBufferStrategy();                        //Le pasamos al canvas el buffer strategy pero nos devuelve un nulo
+        if (bs == null) {
+            canvas.createBufferStrategy(3);
+            return;
+        }
+        g = bs.getDrawGraphics();
         if (bs == null) {                                       //Creamos este condicional para utilizar varios buffer en caso de que los necesitemos
             canvas.createBufferStrategy(2);                   //Esto utiliza un la cantidad de buffers que pasemos como parametro y lo devuelve para evitar errores
             return;
@@ -58,25 +67,37 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
         g = bs.getDrawGraphics();
         //------------------------------
         //Aqui dibujamos
-        g.clearRect(0, 0, WIDTH, HEIGTH);
-
-        g.drawRect(x, 0, 100, 100);
-
         g.setColor(Color.BLACK);
 
-        g.drawString("" + AVERAGEFPS, 10, 10);
+        g.fillRect(0, 0, WIDTH, HEIGTH);
+
+        g.drawImage(Assets.player, 100, 100, null);
+
+        g.drawString("" + AVERAGEFPS, 10, 20);
 
         //------------------------------
         g.dispose();
         bs.show();
     }
 
+    /**
+     * Metodo para iniciar los assets
+     */
+    private void init(){
+        Assets.init();
+    }
+
+    /**
+     * Metodo para hacer correr a nuestro hilo
+     */
     @Override
     public void run() {
         long now;                                               //Variable que registra el tiempo
         long lastTime = System.nanoTime();                      //Variable que nos devuelve la hora exacta del sistema en nanosegundos
         int frames = 0;
         long time = 0;
+
+        init();
 
         //este bucle restringe el tiempo a 60 fps
         while (running){
@@ -99,12 +120,18 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
         stop();
     }
 
+    /**
+     * Metodo para empezar un hilo
+     */
     public void start(){
         thread = new Thread(this);                      //Objeto de la clase Thread que recibe por parametro la implementacion de Runnable
         thread.start();                                         //Declaramos el comienzo del hilo
         running = true;
     }
 
+    /**
+     * Metodo para detener nuestro hilo
+     */
     public void stop(){
         try {
             thread.join();                                      //El estado del hilo pasaria a un estado de espera
