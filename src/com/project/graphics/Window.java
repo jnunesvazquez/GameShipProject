@@ -18,7 +18,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
 
     private Canvas canvas;                                      //Instanciamos la clase canvas que nos permite dibujar sobre nuestra ventana o incluso captar eventos de teclado
     private Thread thread;                                      //Instanciamos la clase de hilos para crear un subproceso en el metodo run()
-    private KeyBoard keyBoard;
+    private KeyBoard keyBoard = new KeyBoard();
 
     private final int FPS = 60;
     private double TARGETTIME = 1000000000/FPS;                 //Variable que indica el tiempo necesario para aumentar un fotograma
@@ -86,7 +86,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
      */
     private void init(){
         Assets.init();
-        gameState=new GameState();
+        gameState = new GameState();
     }
 
     /**

@@ -10,11 +10,12 @@ public class GameState {
 
     private Player player;
 
-    public GameState(){
+    public GameState() {
         player=new Player(new Vector2D(100,500), Assets.player);
     }
-    public void update(){
 
+    public void update(){
+        player.update();
     }
     public void draw(Graphics g){
         player.draw(g);
