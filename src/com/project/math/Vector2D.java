@@ -1,6 +1,7 @@
 package com.project.math;
 
 public class Vector2D {
+
     private double x, y;
 
     public Vector2D(double x, double y) {
@@ -21,19 +22,17 @@ public class Vector2D {
         return new Vector2D(x * value, y * value);
     }
 
-    public void limit(double value) {
-        if(x > value)
-            x = value;
-        if(x < -value)
-            x = -value;
-        if(y > value)
-            y = value;
-        if(y < -value)
-            y = -value;
+    public Vector2D limit(double value) {
+        if(getMagnitude() > value)
+        {
+            return this.normalize().scale(value);
+        }
+        return this;
     }
 
     public Vector2D normalize() {
-        return new Vector2D(x / getMagnitude(), y / getMagnitude());
+        double magnitude = getMagnitude();
+        return new Vector2D(x / magnitude, y / magnitude);
     }
 
     public double getMagnitude(){
@@ -41,7 +40,8 @@ public class Vector2D {
     }
 
     public Vector2D setDirection(double angle){
-        return new Vector2D(Math.cos(angle) * getMagnitude(), Math.sin(angle) * getMagnitude());
+        double magnitude = getMagnitude();
+        return new Vector2D(Math.cos(angle) * magnitude, Math.sin(angle) * magnitude);
     }
 
     public double getX() {
