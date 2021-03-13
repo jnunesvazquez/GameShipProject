@@ -1,7 +1,5 @@
 package com.project.graphics;
-
 import com.project.input.KeyBoard;
-
 import com.project.states.GameState;
 
 import javax.swing.*;
@@ -10,20 +8,21 @@ import java.awt.image.BufferStrategy;
 
 public class Window extends JFrame implements Runnable{         //JFrame nos permitira crear nuestra ventana de juego y Runnable para implementar un subproceso y no sobrecargar el JFrame
 
-    public static final int WIDTH = 800, HEIGTH = 500;
-    private boolean running;                                    //Variable que nos permite controlar el estado del juego
+    public static final int WIDTH = 800, HEIGTH = 600;
+    private boolean running = false;                                    //Variable que nos permite controlar el estado del juego
 
     private BufferStrategy bs;
     private Graphics g;                                         //Clase que nos permite dibujar
 
     private Canvas canvas;                                      //Instanciamos la clase canvas que nos permite dibujar sobre nuestra ventana o incluso captar eventos de teclado
     private Thread thread;                                      //Instanciamos la clase de hilos para crear un subproceso en el metodo run()
-    private KeyBoard keyBoard = new KeyBoard();
 
     private final int FPS = 60;
     private double TARGETTIME = 1000000000/FPS;                 //Variable que indica el tiempo necesario para aumentar un fotograma
     private double delta = 0;                                   //Variable que almacena el tiempo transcurrido dentro de nuestro juego
     private int AVERAGEFPS = FPS;                               //Variable que indica a cuantos FPS funciona nuestro juego en un momento
+
+    private KeyBoard keyBoard = new KeyBoard();
     private GameState gameState;
 
     /**
@@ -38,6 +37,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
         setVisible(true);                                       //Metodo para que la ventana sea visible
 
         canvas = new Canvas();
+
 
         canvas.setPreferredSize(new Dimension(WIDTH, HEIGTH));  //Metodo que define el tamaño de nuestro rectangulo
         canvas.setMaximumSize(new Dimension(WIDTH, HEIGTH));    //Metodo que define el tamaño maximo de nuestro rectangulo
@@ -72,7 +72,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
 
         g.fillRect(0, 0, WIDTH, HEIGTH);
 
-        g.drawImage(Assets.player, 100, 100, null);
+        gameState.draw(g);
 
         g.drawString("" + AVERAGEFPS, 10, 20);
 
@@ -139,7 +139,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
             thread.join();                                      //El estado del hilo pasaria a un estado de espera
             running = false;
         } catch (InterruptedException e) {
-            e.printStackTrace();                                //Metodo que imprime informacion de un error incluyendo las clases de donde proceden
+            System.out.println(e.getMessage());                                //Metodo que imprime informacion de un error incluyendo las clases de donde proceden
         }
     }
 }

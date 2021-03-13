@@ -12,6 +12,6 @@ public class Assets {
      * Le asociamos imagen de aspecto al jugador
      */
     public static void init(){
-        player=Loader.imageLoader("/ships/player.png");
+        player = Loader.imageLoader("/ships/player.png");
     }
 }

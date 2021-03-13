@@ -13,6 +13,37 @@ public class Vector2D {
         y = 0;
     }
 
+    public Vector2D add(Vector2D v){
+        return new Vector2D(x + v.getX(), y + v.getY());
+    }
+
+    public Vector2D scale(double value){
+        return new Vector2D(x * value, y * value);
+    }
+
+    public void limit(double value) {
+        if(x > value)
+            x = value;
+        if(x < -value)
+            x = -value;
+        if(y > value)
+            y = value;
+        if(y < -value)
+            y = -value;
+    }
+
+    public Vector2D normalize() {
+        return new Vector2D(x / getMagnitude(), y / getMagnitude());
+    }
+
+    public double getMagnitude(){
+        return Math.sqrt(x * x + y * y);
+    }
+
+    public Vector2D setDirection(double angle){
+        return new Vector2D(Math.cos(angle) * getMagnitude(), Math.sin(angle) * getMagnitude());
+    }
+
     public double getX() {
         return x;
     }
