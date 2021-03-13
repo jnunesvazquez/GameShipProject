@@ -36,9 +36,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
         setResizable(false);                                    //Metodo que permite o no redimensionar la ventana
         setLocationRelativeTo(null);                            //Metodo para definir la visualizacion de la ventana en el centro de la pantalla
 
-
         canvas = new Canvas();
-
 
         canvas.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));  //Metodo que define el tamaño de nuestro rectangulo
         canvas.setMaximumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));    //Metodo que define el tamaño maximo de nuestro rectangulo

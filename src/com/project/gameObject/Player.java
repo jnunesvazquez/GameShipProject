@@ -51,12 +51,9 @@ public class Player extends MovingObject{
                 acceleration = velocity.scale(-1).normalize().scale(Constants.ACC / 2);
             }
         }
-
         velocity = velocity.add(acceleration);
-        velocity = velocity.limit(maxVelocity);
-
+        velocity.limit(maxVelocity);
         heading = heading.setDirection(angle - Math.PI/2);
-
         position = position.add(velocity);
 
         if(position.getX() > Constants.WIDTH)
@@ -75,13 +72,9 @@ public class Player extends MovingObject{
     @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        AffineTransform at1 = AffineTransform.getTranslateInstance(position.getX() + width/2 + 5, position.getY() + height/2 + 10);
-        AffineTransform at2 = AffineTransform.getTranslateInstance(position.getX() + 5, position.getY() + height/2 + 10);
-        at1.rotate(angle, -5, -10);
-        at2.rotate(angle, width/2 -5, -10);
         at = AffineTransform.getTranslateInstance(position.getX(), position.getY());
-        at.rotate(angle, width/2, height/2);
-        g2d.drawImage(Assets.player, at, null);
+        at.rotate(angle, Assets.player.getWidth()/2, Assets.player.getHeight()/2);
+        g2d.drawImage(texture, at, null);
     }
 
     public Vector2D getCenter(){
