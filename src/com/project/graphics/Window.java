@@ -1,4 +1,8 @@
 package com.project.graphics;
+import com.project.input.KeyBoard;
+import com.project.states.GameState;
+import constants.Constants;
+import constants.Threads;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,10 +10,9 @@ import java.awt.image.BufferStrategy;
 
 public class Window extends JFrame implements Runnable{         //JFrame nos permitira crear nuestra ventana de juego y Runnable para implementar un subproceso y no sobrecargar el JFrame
 
-    public static final int WIDTH = 800, HEIGTH = 500;
-    private boolean running;                                    //Variable que nos permite controlar el estado del juego
+    private boolean running = false;                            //Variable que nos permite controlar el estado del juego
 
-    private BufferStrategy bs;
+    private BufferStrategy bs;                                  //Clase que nos permite crear buffers
     private Graphics g;                                         //Clase que nos permite dibujar
 
     private Canvas canvas;                                      //Instanciamos la clase canvas que nos permite dibujar sobre nuestra ventana o incluso captar eventos de teclado
@@ -20,38 +23,41 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
     private double delta = 0;                                   //Variable que almacena el tiempo transcurrido dentro de nuestro juego
     private int AVERAGEFPS = FPS;                               //Variable que indica a cuantos FPS funciona nuestro juego en un momento
 
+    private KeyBoard keyBoard = new KeyBoard();
+    private GameState gameState;
+
     /**
      * Constructor de nuestra ventana
      */
     public Window(){
         setTitle("Destructor");                                 //Metodo para definir el titulo de la ventana
-        setSize(WIDTH, HEIGTH);                                 //Metodo para definir el tamaño de la ventana
+        setSize(Constants.WIDTH, Constants.HEIGHT);             //Metodo para definir el tamaño de la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);         //Metodo que nos permite cerrar la ventana
         setResizable(false);                                    //Metodo que permite o no redimensionar la ventana
         setLocationRelativeTo(null);                            //Metodo para definir la visualizacion de la ventana en el centro de la pantalla
-        setVisible(true);                                       //Metodo para que la ventana sea visible
 
         canvas = new Canvas();
 
-        canvas.setPreferredSize(new Dimension(WIDTH, HEIGTH));  //Metodo que define el tamaño de nuestro rectangulo
-        canvas.setMaximumSize(new Dimension(WIDTH, HEIGTH));    //Metodo que define el tamaño maximo de nuestro rectangulo
-        canvas.setMinimumSize(new Dimension(WIDTH, HEIGTH));    //Metodo que define el tamaño minimo de nuestro rectangulo
+        canvas.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));  //Metodo que define el tamaño de nuestro rectangulo
+        canvas.setMaximumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));    //Metodo que define el tamaño maximo de nuestro rectangulo
+        canvas.setMinimumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));    //Metodo que define el tamaño minimo de nuestro rectangulo
         canvas.setFocusable(true);                              //Metodo que permita interactuar con el rectangulo
 
         add(canvas);
+        canvas.addKeyListener(keyBoard);                        //Añadimos la interaccion por teclado al objeto dentro de la ventana
+        setVisible(true);                                       //Metodo para que la ventana sea visible
     }
 
-    private int x = 0;
-
     /**
-     * Metodo que nos permite actualizar los fotogramas de nuestros juego
+     * Metodo que nos permite actualizar las interacciones o procesos secundarios durante el proceso principal
      */
     public void update() {
-        x++;
+        keyBoard.update();
+        gameState.update();
     }
 
     /**
-     * Metodo para dibujar con doble buffering
+     * Metodo para dibujar con doble buffering e introducirlo en nuestro gameState
      */
     public void draw(){
         bs = canvas.getBufferStrategy();                        //Le pasamos al canvas el buffer strategy pero nos devuelve un nulo
@@ -60,18 +66,15 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
             return;
         }
         g = bs.getDrawGraphics();
-        if (bs == null) {                                       //Creamos este condicional para utilizar varios buffer en caso de que los necesitemos
-            canvas.createBufferStrategy(2);                   //Esto utiliza un la cantidad de buffers que pasemos como parametro y lo devuelve para evitar errores
-            return;
-        }
-        g = bs.getDrawGraphics();
         //------------------------------
         //Aqui dibujamos
         g.setColor(Color.BLACK);
 
-        g.fillRect(0, 0, WIDTH, HEIGTH);
+        g.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
 
-        g.drawImage(Assets.player, 100, 100, null);
+        gameState.draw(g);
+
+        g.setColor(Color.WHITE);
 
         g.drawString("" + AVERAGEFPS, 10, 20);
 
@@ -85,6 +88,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
      */
     private void init(){
         Assets.init();
+        gameState = new GameState();
     }
 
     /**
@@ -137,7 +141,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
             thread.join();                                      //El estado del hilo pasaria a un estado de espera
             running = false;
         } catch (InterruptedException e) {
-            e.printStackTrace();                                //Metodo que imprime informacion de un error incluyendo las clases de donde proceden
+            System.out.println(e.getMessage());
         }
     }
 }
