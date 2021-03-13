@@ -12,21 +12,22 @@ import java.awt.image.BufferedImage;
 public class Meteor extends MovingObject{
     public Meteor(Vector2D position, Vector2D velocity, double maxVelocity, BufferedImage texture, GameState gameState) {
         super(position, velocity, maxVelocity, texture, gameState);
+        this.velocity = velocity.scale(maxVelocity);                    //Para que los meteoritos vayan a diferentes velocidades
     }
 
     @Override
     public void update() {
         position = position.add(velocity);
         if(position.getX() > Constants.WIDTH){
-            position.setX(0);
+            position.setX(-width);
         }
         if(position.getY() > Constants.HEIGHT){
-            position.setY(0);
+            position.setY(-height);
         }
-        if(position.getX() < 0){
+        if(position.getX() < -width){
             position.setX(Constants.WIDTH);
         }
-        if(position.getY() < 0){
+        if(position.getY() < -height){
             position.setY(Constants.HEIGHT);
         }
         angle += Constants.DELTAANGLE / 2;

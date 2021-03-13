@@ -10,7 +10,6 @@ public class Assets {
     public static BufferedImage[] bigs = new BufferedImage[4];
     public static BufferedImage[] meds = new BufferedImage[2];
     public static BufferedImage[] smalls = new BufferedImage[2];
-    public static BufferedImage[] tinies = new BufferedImage[2];
 
     /**
      * Le asociamos imagen de aspecto al jugador
@@ -28,9 +27,6 @@ public class Assets {
         }
         for(int i = 0; i < smalls.length; i++){
             smalls[i] = Loader.imageLoader("/meteors/small" + (i + 1) + ".png");
-        }
-        for(int i = 0; i < tinies.length; i++){
-            tinies[i] = Loader.imageLoader("/meteors/tiny" + (i + 1) + ".png");
         }
     }
 }

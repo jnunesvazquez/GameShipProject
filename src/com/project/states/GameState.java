@@ -44,13 +44,29 @@ public class GameState {
             else {
                 y = Math.random() * Constants.HEIGHT;
             }
-            BufferedImage texture = Assets.bigs [(int) Math.random()*Assets.bigs.length];
+            BufferedImage texture1 = Assets.bigs [(int) Math.random()*Assets.bigs.length];
+            BufferedImage texture2 = Assets.meds [(int) Math.random()*Assets.bigs.length];
+            BufferedImage texture3 = Assets.smalls [(int) Math.random()*Assets.bigs.length];
 
             movingObjects.add(new Meteor(
                     new Vector2D(x, y),
                     new Vector2D(0, 1).setDirection(Math.random() * Math.PI * 2),       //Generamos un vector aleatorio entre 0º y 360º
                     2 * Math.random() + 1,
-                    texture,
+                    texture1,
+                    this
+            ));
+            movingObjects.add(new Meteor(
+                    new Vector2D(x, y),
+                    new Vector2D(0, 1).setDirection(Math.random() * Math.PI * 2),       //Generamos un vector aleatorio entre 0º y 360º
+                    2 * Math.random() + 1,
+                    texture2,
+                    this
+            ));
+            movingObjects.add(new Meteor(
+                    new Vector2D(x, y),
+                    new Vector2D(0, 1).setDirection(Math.random() * Math.PI * 2),       //Generamos un vector aleatorio entre 0º y 360º
+                    2 * Math.random() + 1,
+                    texture3,
                     this
             ));
         }
@@ -68,6 +84,7 @@ public class GameState {
         }
         startWave();
     }
+
     public void draw(Graphics g){
         for (int i = 0; i < movingObjects.size(); i++) {
             movingObjects.get(i).draw(g);
