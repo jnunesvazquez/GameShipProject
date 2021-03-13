@@ -1,0 +1,3 @@
+[submodule "GameLibrary"]
+	path = GameLibrary
+	url = https://github.com/jnunesvazquez/GameLibrary
