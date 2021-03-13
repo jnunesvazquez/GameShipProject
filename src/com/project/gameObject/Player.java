@@ -67,6 +67,7 @@ public class Player extends MovingObject{
             position.setY(Constants.HEIGHT);
 
         fireRate.update();
+        collidesWith();
     }
 
     @Override
@@ -75,9 +76,5 @@ public class Player extends MovingObject{
         at = AffineTransform.getTranslateInstance(position.getX(), position.getY());
         at.rotate(angle, Assets.player.getWidth()/2, Assets.player.getHeight()/2);
         g2d.drawImage(texture, at, null);
-    }
-
-    public Vector2D getCenter(){
-        return new Vector2D(position.getX() + width / 2, position.getY() + height / 2);
     }
 }

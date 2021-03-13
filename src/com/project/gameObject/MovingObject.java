@@ -5,6 +5,7 @@ import com.project.states.GameState;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public abstract class MovingObject extends GameObject{
 
@@ -24,5 +25,40 @@ public abstract class MovingObject extends GameObject{
         width = texture.getWidth();
         height = texture.getHeight();
         angle = 0;
+    }
+
+    /**
+     * Metodo de colision de los objetos
+     */
+    protected void collidesWith(){
+        ArrayList<MovingObject> movingObjects = gameState.getMovingObjects();           //Creamos un ArrayList para saber si un objeto colisiona o no
+        for (int i = 0; i < movingObjects.size(); i++){                                 //Recorremos el array
+            MovingObject m = movingObjects.get(i);
+            if (m.equals(this)){                                                        //Comprobamos que cada objeto no colisione consigo mismo
+                continue;
+            }
+
+            double distance = m.getCenter().subtract(getCenter()).getMagnitude();       //Calculamos la distancia entre objetos
+                            //radio      //radio del objeto seleccionado    //metodo para que cuando dos meteoros colisionen entre si no se destruyan
+            if (distance < m.width / 2 + width / 2 && movingObjects.contains(this)){
+                objectCollision(m, this);
+            }
+        }
+    }
+
+    private void objectCollision(MovingObject a, MovingObject b){
+                //comprueba la instancia del objeto
+        if (!(a instanceof Meteor && b instanceof Meteor)){
+            a.destroy();
+            b.destroy();
+        }
+    }
+
+    protected void destroy(){
+        gameState.getMovingObjects().remove(this);
+    }
+
+    protected Vector2D getCenter(){
+        return new Vector2D(position.getX() + width / 2, position.getY() + height / 2);
     }
 }
