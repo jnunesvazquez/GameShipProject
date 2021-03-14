@@ -17,7 +17,8 @@ public class Message {
     private Font font; //nuestra fueste de texto
     private final float deltaAlpha=0.01f; //valor que indica la rapidesz con la que parece y desaparece
 
-    public Message(GameState gameState, String text, Vector2D position, Color color, boolean center, boolean fade, Font font) {
+    public Message(Vector2D position, boolean fade, String text, Color color,
+                   boolean center, Font font, GameState gameState) {
         this.gameState = gameState;
         this.text = text;
         this.position = position;

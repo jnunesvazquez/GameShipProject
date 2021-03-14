@@ -39,7 +39,6 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
 
         canvas = new Canvas();
 
-
         canvas.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));  //Metodo que define el tamaño de nuestro rectangulo
         canvas.setMaximumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));    //Metodo que define el tamaño maximo de nuestro rectangulo
         canvas.setMinimumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));    //Metodo que define el tamaño minimo de nuestro rectangulo

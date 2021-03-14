@@ -51,12 +51,9 @@ public class Player extends MovingObject{
                 acceleration = velocity.scale(-1).normalize().scale(Constants.ACC / 2);
             }
         }
-
         velocity = velocity.add(acceleration);
-        velocity = velocity.limit(maxVelocity);
-
+        velocity.limit(maxVelocity);
         heading = heading.setDirection(angle - Math.PI/2);
-
         position = position.add(velocity);
 
         if(position.getX() > Constants.WIDTH)
@@ -70,6 +67,7 @@ public class Player extends MovingObject{
             position.setY(Constants.HEIGHT);
 
         fireRate.update();
+        collidesWith();
     }
 
     @Override

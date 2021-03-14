@@ -7,8 +7,8 @@ import java.io.IOException;
 
 public class Loader {
     /**
-     * Se encarga de cargar los archivos de imagenes.
-     * @param path Nombre del arcchivo a cargar.
+     * Se encarga de cargar los archivos de sonido,imagenes.
+     * @param path Nombre del archivo a cargar.
      * @return Buffer de imagenes.
      * Si falla al cargar una imagen devuelve un null.
      */

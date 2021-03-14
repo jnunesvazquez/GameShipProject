@@ -18,6 +18,10 @@ public class Vector2D {
         return new Vector2D(x + v.getX(), y + v.getY());
     }
 
+    public Vector2D subtract(Vector2D v){
+        return new Vector2D(x - v.getX(), y - v.getY());
+    }
+
     public Vector2D scale(double value){
         return new Vector2D(x * value, y * value);
     }
