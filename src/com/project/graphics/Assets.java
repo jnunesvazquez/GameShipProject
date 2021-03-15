@@ -11,7 +11,12 @@ public class Assets {
     public static BufferedImage[] bigs = new BufferedImage[4];
     public static BufferedImage[] meds = new BufferedImage[2];
     public static BufferedImage[] smalls = new BufferedImage[2];
-
+    //fuentes/fonts
+    public static Font fontBig;
+    public static Font fontMed;
+    // numbers
+    public static BufferedImage[] numbers = new BufferedImage[11];
+    public static BufferedImage life;
     /**
      * Le asociamos imagen de aspecto al jugador
      */
@@ -20,6 +25,9 @@ public class Assets {
         blueLaser = Loader.imageLoader("/lasers/laserBlue01.png");
         greenLaser = Loader.imageLoader("/lasers/laserGreen11.png");
         redLaser = Loader.imageLoader("/lasers/laserRed01.png");
+        life = Loader.imageLoader("/others/life.png");
+        for(int i = 0; i < numbers.length; i++)
+            numbers[i] = Loader.imageLoader("/numbers/"+i+".png");
         for(int i = 0; i < bigs.length; i++){
             bigs[i] = Loader.imageLoader("/meteors/big" + (i + 1) + ".png");
         }
@@ -34,8 +42,6 @@ public class Assets {
         fontMed =Loader.loadFont("/fonts/futureFont.ttf",20); //Para mensajes no tan grandes
     }
 
-    //fuentes/fonts
-    public static Font fontBig;
-    public static Font fontMed;
+
 
 }
