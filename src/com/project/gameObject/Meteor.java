@@ -33,6 +33,11 @@ public class Meteor extends MovingObject{
         angle += Constants.DELTAANGLE / 2;
     }
 
+    @Override
+    protected void destroy() {
+        gameState.addScore(Constants.METEOR_SCORE,position);
+        super.destroy();
+    }
 
     @Override
     public void draw(Graphics g) {
