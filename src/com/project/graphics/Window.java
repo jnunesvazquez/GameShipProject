@@ -2,8 +2,6 @@ package com.project.graphics;
 import com.project.input.KeyBoard;
 import com.project.states.GameState;
 import constants.Constants;
-import constants.Threads;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
