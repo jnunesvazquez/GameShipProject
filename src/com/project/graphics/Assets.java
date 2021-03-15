@@ -1,5 +1,6 @@
 package com.project.graphics;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Assets {
@@ -11,6 +12,18 @@ public class Assets {
     public static BufferedImage[] meds = new BufferedImage[2];
     public static BufferedImage[] smalls = new BufferedImage[2];
 
+    //fuentes/fonts
+    public static Font fontBig;
+    public static Font fontMed;
+
+    // numbers
+    public static BufferedImage[] numbers = new BufferedImage[11];
+    public static BufferedImage life;
+
+    // ui
+    public static BufferedImage blueButton;
+    public static BufferedImage greyButton;
+
     /**
      * Le asociamos imagen de aspecto al jugador
      */
@@ -19,6 +32,13 @@ public class Assets {
         blueLaser = Loader.imageLoader("/lasers/laserBlue01.png");
         greenLaser = Loader.imageLoader("/lasers/laserGreen11.png");
         redLaser = Loader.imageLoader("/lasers/laserRed01.png");
+        life = Loader.imageLoader("/others/life.png");              //Vidas
+        fontBig = Loader.loadFont("/fonts/futureFont.ttf",42); //Para mensajes grandes
+        fontMed = Loader.loadFont("/fonts/futureFont.ttf",20); //Para mensajes no tan grandes
+        greyButton = Loader.imageLoader("/ui/grey_button.png");     //Boton gris
+        blueButton = Loader.imageLoader("/ui/blue_button.png");     //Boton azul
+        for(int i = 0; i < numbers.length; i++)
+            numbers[i] = Loader.imageLoader("/numbers/"+i+".png");
         for(int i = 0; i < bigs.length; i++){
             bigs[i] = Loader.imageLoader("/meteors/big" + (i + 1) + ".png");
         }

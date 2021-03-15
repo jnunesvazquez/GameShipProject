@@ -1,9 +1,10 @@
 package com.project.graphics;
 import com.project.input.KeyBoard;
+import com.project.input.MouseInput;
 import com.project.states.GameState;
+import com.project.states.MenuState;
+import com.project.states.State;
 import constants.Constants;
-import constants.Threads;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -23,8 +24,8 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
     private double delta = 0;                                   //Variable que almacena el tiempo transcurrido dentro de nuestro juego
     private int AVERAGEFPS = FPS;                               //Variable que indica a cuantos FPS funciona nuestro juego en un momento
 
-    private KeyBoard keyBoard = new KeyBoard();
-    private GameState gameState;
+    private KeyBoard keyBoard;
+    private MouseInput mouseInput;
 
     /**
      * Constructor de nuestra ventana
@@ -36,7 +37,10 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
         setResizable(false);                                    //Metodo que permite o no redimensionar la ventana
         setLocationRelativeTo(null);                            //Metodo para definir la visualizacion de la ventana en el centro de la pantalla
 
+
         canvas = new Canvas();
+        keyBoard = new KeyBoard();
+        mouseInput = new MouseInput();
 
         canvas.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));  //Metodo que define el tamaño de nuestro rectangulo
         canvas.setMaximumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));    //Metodo que define el tamaño maximo de nuestro rectangulo
@@ -44,7 +48,9 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
         canvas.setFocusable(true);                              //Metodo que permita interactuar con el rectangulo
 
         add(canvas);
-        canvas.addKeyListener(keyBoard);                        //Añadimos la interaccion por teclado al objeto dentro de la ventana
+        canvas.addKeyListener(keyBoard);                        //Añadimos la interaccion por teclado a la ventana
+        canvas.addMouseListener(mouseInput);                    //Añadimos la interaccion por raton a la ventana
+        canvas.addMouseMotionListener(mouseInput);              //Añadimos el detector de movimiento al programa
         setVisible(true);                                       //Metodo para que la ventana sea visible
     }
 
@@ -53,7 +59,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
      */
     public void update() {
         keyBoard.update();
-        gameState.update();
+        State.getCurrentState().update();
     }
 
     /**
@@ -72,7 +78,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
 
         g.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
 
-        gameState.draw(g);
+        State.getCurrentState().draw(g);
 
         g.setColor(Color.WHITE);
 
@@ -88,7 +94,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
      */
     private void init(){
         Assets.init();
-        gameState = new GameState();
+        State.changeState(new MenuState());
     }
 
     /**
@@ -141,7 +147,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
             thread.join();                                      //El estado del hilo pasaria a un estado de espera
             running = false;
         } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage());;                               //Metodo que imprime informacion de un error incluyendo las clases de donde proceden
         }
     }
 }

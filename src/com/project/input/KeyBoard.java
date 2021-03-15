@@ -1,9 +1,10 @@
 package com.project.input;
 
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyBoard implements KeyListener {
+public class KeyBoard extends KeyAdapter {
     //Le asociamos este tamaño porque equivale a la cantidad de elementos que posee el teclado
     private boolean [] keys = new boolean[256];
 
@@ -40,7 +41,4 @@ public class KeyBoard implements KeyListener {
     public void keyReleased(KeyEvent keyEvent) {
         keys [keyEvent.getKeyCode()] = false;
     }
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {}
 }
