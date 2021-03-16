@@ -1,7 +1,7 @@
 package com.project.graphics;
+
 import com.project.input.KeyBoard;
 import com.project.input.MouseInput;
-import com.project.states.GameState;
 import com.project.states.MenuState;
 import com.project.states.State;
 import constants.Constants;
@@ -98,7 +98,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
     }
 
     /**
-     * Metodo para hacer correr a nuestro hilo
+     * Metodo para hacer correr a nuestro hilo a 60 fotogramas por segundo
      */
     @Override
     public void run() {

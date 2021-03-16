@@ -2,7 +2,6 @@ package com.project.input;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class KeyBoard extends KeyAdapter {
     //Le asociamos este tamaño porque equivale a la cantidad de elementos que posee el teclado
