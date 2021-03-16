@@ -20,7 +20,7 @@ public class GameState extends State{
     private int meteors;                                                //Variable para indicar cuantos meteoritos habra en cada oleada
     private ArrayList<Message> messages = new ArrayList<Message>();
     private int score = 0; //Puntaje del jugador que al inicio empieza con 09
-    private int waves = 1; //oleadas de la partida iniciadas en 1
+    private int waves = 0; //Contador iniciado en 0
     private int lives = 3;
     public static final Vector2D PLAYER_START_POSITION = new Vector2D(Constants.WIDTH/2 - Assets.player.getWidth()/2,
             Constants.HEIGHT/2 - Assets.player.getHeight()/2);
@@ -74,20 +74,21 @@ public class GameState extends State{
             ));
             movingObjects.add(new Meteor(
                     new Vector2D(x, y),
-                    new Vector2D(0, 1).setDirection(Math.random() * Math.PI * 2),       //Generamos un vector aleatorio entre 0º y 360º
+                    new Vector2D(0, 1).setDirection(Math.random() * Math.PI * 2),
                     Constants.METEOR_VEL * Math.random() + 1,
                     texture2,
                     this
             ));
             movingObjects.add(new Meteor(
                     new Vector2D(x, y),
-                    new Vector2D(0, 1).setDirection(Math.random() * Math.PI * 2),       //Generamos un vector aleatorio entre 0º y 360º
+                    new Vector2D(0, 1).setDirection(Math.random() * Math.PI * 2),
                     Constants.METEOR_VEL * Math.random() + 1,
                     texture3,
                     this
             ));
         }
         meteors++;
+        waves++; //suma uno en cada ronda
     }
 
     public void update() {
