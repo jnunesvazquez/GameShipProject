@@ -2,7 +2,6 @@ package com.project.graphics;
 import com.project.input.KeyBoard;
 import com.project.states.GameState;
 import constants.Constants;
-import constants.Threads;
 
 import javax.swing.*;
 import java.awt.*;
@@ -84,7 +83,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
     }
 
     /**
-     * Metodo para iniciar los assets
+     * Metodo para iniciar los assets dentro de nuestro estado de juego
      */
     private void init(){
         Assets.init();
