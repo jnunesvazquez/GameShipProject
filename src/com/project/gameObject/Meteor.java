@@ -34,6 +34,12 @@ public class Meteor extends MovingObject{
     }
 
     @Override
+    protected void destroy() {
+        gameState.addScore(Constants.METEOR_SCORE,position);
+        super.destroy();
+    }
+
+    @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         at = AffineTransform.getTranslateInstance(position.getX(), position.getY());
