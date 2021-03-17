@@ -16,6 +16,7 @@ public abstract class MovingObject extends GameObject{
     protected double maxVelocity;
     protected int width;
     protected int height;
+    protected boolean dead;
 
     public MovingObject(Vector2D position, Vector2D velocity, double maxVelocity, BufferedImage texture, GameState gameState) {
         super(position, texture);
@@ -25,6 +26,7 @@ public abstract class MovingObject extends GameObject{
         width = texture.getWidth();
         height = texture.getHeight();
         angle = 0;
+        dead = false;
     }
 
     /**
@@ -43,7 +45,6 @@ public abstract class MovingObject extends GameObject{
             if (distance < m.width / 2 + width / 2 && movingObjects.contains(this)){
                 objectCollision(m, this);
             }
-
         }
     }
 
@@ -59,14 +60,17 @@ public abstract class MovingObject extends GameObject{
             a.destroy();
             b.destroy();
         }
-
     }
 
     protected void destroy(){
-        gameState.getMovingObjects().remove(this);
+        dead = true;
     }
 
     protected Vector2D getCenter(){
         return new Vector2D(position.getX() + width / 2, position.getY() + height / 2);
+    }
+
+    public boolean isDead() {
+        return dead;
     }
 }
