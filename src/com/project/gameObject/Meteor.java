@@ -1,11 +1,11 @@
 package com.project.gameObject;
 
-import com.project.graphics.Assets;
 import com.project.math.Vector2D;
 import com.project.states.GameState;
 import constants.Constants;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
@@ -34,10 +34,16 @@ public class Meteor extends MovingObject{
     }
 
     @Override
+    protected void destroy() {
+        gameState.addScore(Constants.METEOR_SCORE,position);
+        super.destroy();
+    }
+
+    @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         at = AffineTransform.getTranslateInstance(position.getX(), position.getY());
-        at.rotate(angle, width/2, height/2);
+        at.rotate(angle, width / 2, height / 2);
         g2d.drawImage(texture, at, null);
     }
 }

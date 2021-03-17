@@ -1,6 +1,7 @@
 package com.project.graphics;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -19,5 +20,25 @@ public class Loader {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    /**
+     * Metodo para cargar las fuentes que vamos a introducir
+     * @param path nombre del archivo
+     * @param size tamaño
+     * @return retorna la fuente que llamamos
+     * en caso de que salte alguna escepcion retorna un nulo
+     */
+    public static Font loadFont(String path, int size){
+        try {
+            return Font.createFont(Font.TRUETYPE_FONT,Loader.class.getResourceAsStream(path))
+                    .deriveFont(Font.PLAIN,size);
+        } catch (FontFormatException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

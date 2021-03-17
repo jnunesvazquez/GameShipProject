@@ -16,6 +16,7 @@ public abstract class MovingObject extends GameObject{
     protected double maxVelocity;
     protected int width;
     protected int height;
+    protected boolean dead;
 
     public MovingObject(Vector2D position, Vector2D velocity, double maxVelocity, BufferedImage texture, GameState gameState) {
         super(position, texture);
@@ -25,6 +26,7 @@ public abstract class MovingObject extends GameObject{
         width = texture.getWidth();
         height = texture.getHeight();
         angle = 0;
+        dead = false;
     }
 
     /**
@@ -48,6 +50,12 @@ public abstract class MovingObject extends GameObject{
 
     private void objectCollision(MovingObject a, MovingObject b){
                 //comprueba la instancia del objeto
+        if(a instanceof Player && ((Player)a).isSpawning()) {
+            return;
+        }
+        if(b instanceof Player && ((Player)b).isSpawning()) {
+            return;
+        }
         if (!(a instanceof Meteor && b instanceof Meteor)){
             a.destroy();
             b.destroy();
@@ -55,10 +63,14 @@ public abstract class MovingObject extends GameObject{
     }
 
     protected void destroy(){
-        gameState.getMovingObjects().remove(this);
+        dead = true;
     }
 
     protected Vector2D getCenter(){
         return new Vector2D(position.getX() + width / 2, position.getY() + height / 2);
+    }
+
+    public boolean isDead() {
+        return dead;
     }
 }

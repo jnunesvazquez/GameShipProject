@@ -2,7 +2,7 @@ package com.project.gameObject;
 
 import com.project.math.Vector2D;
 
-import java.awt.*;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public abstract class GameObject {

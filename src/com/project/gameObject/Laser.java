@@ -1,16 +1,17 @@
 package com.project.gameObject;
 
-import com.project.graphics.Assets;
 import com.project.math.Vector2D;
 import com.project.states.GameState;
 import constants.Constants;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class Laser extends MovingObject{
-    public Laser(Vector2D position, Vector2D velocity, double maxVelocity, double angle, BufferedImage texture, GameState gameState) {
+    public Laser(Vector2D position, Vector2D velocity, double maxVelocity, double angle,
+                 BufferedImage texture, GameState gameState) {
         super(position, velocity, maxVelocity, texture, gameState);
         this.angle = angle;
         this.velocity = velocity.scale(maxVelocity);
