@@ -9,7 +9,7 @@ public class Files {
      * Con este metodo pido la ruta del usuario y le eñado a la ruta Desktop
      * @return retorno la ruta del escritorio
      */
-    public static String desktop() {
+    private static String desktop() {
         return System.getProperty("user.home") + "\\Desktop\\";
     }
 
@@ -18,7 +18,7 @@ public class Files {
      * @param nameFile Aqui recive la ruta y nombre del archivo a creal
      * @param score Aqui recive la puntuacion que obtuvo en la partida
      */
-    public static void writeScore(String nameFile, int score) {
+    private static void writeScore(String nameFile, int score) {
 
         File fi = new File(nameFile + ".txt");
         PrintWriter esc = null;
@@ -37,7 +37,7 @@ public class Files {
      * @param nomeFich Aqui recive la ruta y nombre del archivo
      * @param puntuacion Aqui recive la puntuacion que obtuvo en la partida
      */
-    public static void readAndWrite(String nomeFich, int puntuacion) {
+    private static void readAndWrite(String nomeFich, int puntuacion) {
         PrintWriter f = null;
         File fich;
         try {
@@ -73,7 +73,7 @@ public class Files {
      * datos, en caso contrario creara el erchivo y escribira los datos
      * @param puntuacion recibe la puntuacion que consiguio el jugador en la partidda
      */
-    private static void LecturaEscritura(int puntuacion) {
+    public static void scoreWriteFinal(int puntuacion) {
         if (checkFile() == true) {
             readAndWrite(desktop() + "Puntuacion", puntuacion);
         } else {

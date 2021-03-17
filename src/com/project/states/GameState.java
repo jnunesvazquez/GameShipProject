@@ -6,6 +6,7 @@ import com.project.gameObject.MovingObject;
 import com.project.gameObject.Player;
 import com.project.graphics.Assets;
 import com.project.math.Vector2D;
+import com.project.scores.Files;
 import constants.Constants;
 import constants.Timer;
 
@@ -22,8 +23,8 @@ public class GameState extends State{
     private ArrayList<MovingObject> movingObjects = new ArrayList();
     private int meteors;                                                //Variable para indicar cuantos meteoritos habra en cada oleada
     private ArrayList<Message> messages = new ArrayList<Message>();
-    private int score = 0; //Puntaje del jugador que al inicio empieza con 09
-    private int waves = 1; //Contador iniciado en 0
+    private int score = 0; //Puntaje del jugador que al inicio empieza con 0
+    private int waves = 1; //Contador iniciado en 1
     private int lives = 3;
 
     private Timer gameOverTimer;
@@ -55,7 +56,7 @@ public class GameState extends State{
     }
 
     public void startWave() {
-        messages.add(new Message(new Vector2D(Constants.WIDTH/2,Constants.HEIGHT/2),true,"Wawe "+waves,Color.WHITE,true,Assets.fontBig));
+        messages.add(new Message(new Vector2D(Constants.WIDTH/2,Constants.HEIGHT/2),true,"Wave "+waves,Color.WHITE,true,Assets.fontBig));
         double x, y;
         for (int i = 0; i < meteors; i++) {                          //Usamos este bucle para generar unas coordenadas logicas aleatorias para nuestro meteorito
             x = i % 2;
@@ -212,7 +213,7 @@ public class GameState extends State{
                 Color.WHITE,
                 true,
                 Assets.fontBig);
-
+        Files.scoreWriteFinal(score);
         this.messages.add(gameOverMsg);
         gameOverTimer.run(Constants.GAME_OVER_TIME);
         gameOver = true;
