@@ -29,12 +29,12 @@ public class GameState extends State{
     private Timer gameOverTimer;
     private boolean gameOver;
 
-    public static final Vector2D PLAYER_START_POSITION = new Vector2D(Constants.WIDTH/2 - Assets.player.getWidth()/2,
-            Constants.HEIGHT/2 - Assets.player.getHeight()/2);
+    public static final Vector2D PLAYER_START_POSITION = new Vector2D(Constants.WIDTH/2 - ChoosePlayerState.getPlayerSkin().getWidth()/2,
+            Constants.HEIGHT/2 - ChoosePlayerState.getPlayerSkin().getHeight()/2);
 
     public GameState() {
         player = new Player(PLAYER_START_POSITION, new Vector2D(),
-                Constants.PLAYER_MAX_VEL, Assets.player, this);
+                Constants.PLAYER_MAX_VEL, ChoosePlayerState.getPlayerSkin(), this);
 
         gameOverTimer = new Timer();
         gameOver = false;
@@ -72,7 +72,6 @@ public class GameState extends State{
             }
             BufferedImage texture1 = Assets.bigs[(int) Math.random() * Assets.bigs.length];
             BufferedImage texture2 = Assets.meds[(int) Math.random() * Assets.bigs.length];
-            BufferedImage texture3 = Assets.smalls[(int) Math.random() * Assets.bigs.length];
 
             movingObjects.add(new Meteor(
                     new Vector2D(x, y),
@@ -86,13 +85,6 @@ public class GameState extends State{
                     new Vector2D(0, 1).setDirection(Math.random() * Math.PI * 2),
                     Constants.METEOR_VEL * Math.random() + 1,
                     texture2,
-                    this
-            ));
-            movingObjects.add(new Meteor(
-                    new Vector2D(x, y),
-                    new Vector2D(0, 1).setDirection(Math.random() * Math.PI * 2),
-                    Constants.METEOR_VEL * Math.random() + 1,
-                    texture3,
                     this
             ));
         }
@@ -200,6 +192,7 @@ public class GameState extends State{
     }
 
     public boolean subtractLife() {
+        score += -20;
         lives --;
         return lives > 0;
     }

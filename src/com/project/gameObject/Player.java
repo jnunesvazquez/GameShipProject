@@ -3,6 +3,7 @@ package com.project.gameObject;
 import com.project.graphics.Assets;
 import com.project.input.KeyBoard;
 import com.project.math.Vector2D;
+import com.project.states.ChoosePlayerState;
 import com.project.states.GameState;
 import constants.Constants;
 
@@ -44,7 +45,7 @@ public class Player extends MovingObject{
                     heading,                                            //Indicamos el vector de velocidad que queremos que recorra el laser
                     Constants.LASER_VEL,                                       //Indicamos la velocidad maxima del laser
                     angle,                                              //Le pasamos el angulo de la nave
-                    Assets.blueLaser,                                    //Le pasamos el sprite del laser
+                    ChoosePlayerState.getPlayerLaser(),                                    //Le pasamos el sprite del laser
                     gameState
                     ));
             fireRate.run(Constants.FIRERATE);
@@ -83,6 +84,7 @@ public class Player extends MovingObject{
         flickerTime.update();
         collidesWith();
     }
+
     @Override
     public void destroy() {
         spawning = true;
@@ -100,6 +102,7 @@ public class Player extends MovingObject{
         velocity = new Vector2D();
         position = GameState.PLAYER_START_POSITION;
     }
+
     @Override
     public void draw(Graphics g) {
         if(!visible)
@@ -109,7 +112,7 @@ public class Player extends MovingObject{
         at1.rotate(angle, -5, -10);
         at = AffineTransform.getTranslateInstance(position.getX(), position.getY());
         at.rotate(angle, width/2, height/2);
-        g2d.drawImage(Assets.player, at, null);
+        g2d.drawImage(ChoosePlayerState.getPlayerSkin(), at, null);
     }
 
     public boolean isSpawning() {return spawning;}
