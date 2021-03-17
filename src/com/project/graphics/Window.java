@@ -5,8 +5,12 @@ import com.project.input.MouseInput;
 import com.project.states.MenuState;
 import com.project.states.State;
 import constants.Constants;
-import javax.swing.*;
-import java.awt.*;
+
+import javax.swing.JFrame;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 public class Window extends JFrame implements Runnable{         //JFrame nos permitira crear nuestra ventana de juego y Runnable para implementar un subproceso y no sobrecargar el JFrame

@@ -47,10 +47,10 @@ public class Button {
             g.drawImage(mouseOutImage, boundingBox.x, boundingBox.y, null);
         }
         Text.drawText(g, text, new Vector2D(
-                boundingBox.getX() + boundingBox.getWidth() / 2,
-                boundingBox.getY() + boundingBox.getHeight()),
-                   true,
-                   Color.BLACK,
+                    boundingBox.getX() + boundingBox.getWidth() / 2,
+                    boundingBox.getY() + boundingBox.getHeight()),
+                true,
+                Color.BLACK,
                 Assets.fontMed);
     }
 }

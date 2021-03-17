@@ -5,11 +5,14 @@ import com.project.gameObject.Meteor;
 import com.project.gameObject.MovingObject;
 import com.project.gameObject.Player;
 import com.project.graphics.Assets;
-import com.project.graphics.Text;
 import com.project.math.Vector2D;
 import constants.Constants;
+import constants.Timer;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -20,18 +23,24 @@ public class GameState extends State{
     private int meteors;                                                //Variable para indicar cuantos meteoritos habra en cada oleada
     private ArrayList<Message> messages = new ArrayList<Message>();
     private int score = 0; //Puntaje del jugador que al inicio empieza con 09
-    private int waves = 0; //Contador iniciado en 0
+    private int waves = 1; //Contador iniciado en 0
     private int lives = 3;
+
+    private Timer gameOverTimer;
+    private boolean gameOver;
+
     public static final Vector2D PLAYER_START_POSITION = new Vector2D(Constants.WIDTH/2 - Assets.player.getWidth()/2,
             Constants.HEIGHT/2 - Assets.player.getHeight()/2);
 
     public GameState() {
         player = new Player(PLAYER_START_POSITION, new Vector2D(),
                 Constants.PLAYER_MAX_VEL, Assets.player, this);
+
+        gameOverTimer = new Timer();
+        gameOver = false;
         movingObjects.add(player);
 
         meteors = 1;
-
         startWave();
     }
 
@@ -42,11 +51,11 @@ public class GameState extends State{
      */
     public void addScore(int value, Vector2D position) {
         score += value; //la puntuacion anterior mas value(nueva puntuacion añadida);
-        messages.add(new Message(position,true,"+"+value+" score",Color.WHITE,false,Assets.fontMed,this));
+        messages.add(new Message(position,true,"+"+value+" score",Color.WHITE,false,Assets.fontMed));
     }
 
     public void startWave() {
-        messages.add(new Message(new Vector2D(Constants.WIDTH/2,Constants.HEIGHT/2),true,"Wawe "+waves,Color.WHITE,true,Assets.fontBig,this));
+        messages.add(new Message(new Vector2D(Constants.WIDTH/2,Constants.HEIGHT/2),true,"Wawe "+waves,Color.WHITE,true,Assets.fontBig));
         double x, y;
         for (int i = 0; i < meteors; i++) {                          //Usamos este bucle para generar unas coordenadas logicas aleatorias para nuestro meteorito
             x = i % 2;
@@ -88,15 +97,27 @@ public class GameState extends State{
             ));
         }
         meteors++;
-        waves++; //suma uno en cada ronda
+        waves++;
     }
 
     public void update() {
         for (int i = 0; i < movingObjects.size(); i++) {
-            movingObjects.get(i).update();
+            MovingObject movingObject = movingObjects.get(i);
+            movingObject.update();
+            if(movingObject.isDead()) {
+                movingObjects.remove(i);
+                i--;
+            }
         }
-        for (int i = 0; i < movingObjects.size(); i++) {
-            if (movingObjects.get(i) instanceof Meteor) {
+
+        if(gameOver && !gameOverTimer.isRunning()) {
+            State.changeState(new MenuState());
+        }
+
+        gameOverTimer.update();
+
+        for (MovingObject movingObject : movingObjects) {
+            if (movingObject instanceof Meteor) {
                 return;
             }
         }
@@ -106,20 +127,18 @@ public class GameState extends State{
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        for(int i = 0; i < messages.size(); i++) {
+            messages.get(i).draw(g2d);
+            if(messages.get(i).isDead())
+                messages.remove(i);
+        }
+
         for (int i = 0; i < movingObjects.size(); i++) {
             movingObjects.get(i).draw(g);
         }
-        for(int i = 0; i < messages.size(); i++) {
-            messages.get(i).draw(g2d);
-        }
-        Text.drawText(g, "Wave " + waves, new Vector2D(Constants.WIDTH / 2,
-                Constants.HEIGHT / 2), true, Color.CYAN, Assets.fontBig); //dibujamos el texto de oleada
+
         drawScore(g);
         drawLives(g);
-    }
-
-    public ArrayList<MovingObject> getMovingObjects() {
-        return movingObjects;
     }
 
     /**
@@ -141,6 +160,9 @@ public class GameState extends State{
         }
     }
     private void drawLives(Graphics g){
+
+        if (lives < 1)
+            return;
 
         Vector2D livePosition = new Vector2D(25, 25);
 
@@ -165,6 +187,10 @@ public class GameState extends State{
         }
 
     }
+    public ArrayList<MovingObject> getMovingObjects() {
+        return movingObjects;
+    }
+
     public ArrayList<Message> getMessages() {
         return messages;
     }
@@ -173,6 +199,23 @@ public class GameState extends State{
         return player;
     }
 
-    public void subtractLife() {lives --;}
+    public boolean subtractLife() {
+        lives --;
+        return lives > 0;
+    }
+
+    public void gameOver() {
+        Message gameOverMsg = new Message(
+                PLAYER_START_POSITION,
+                true,
+                "GAME OVER",
+                Color.WHITE,
+                true,
+                Assets.fontBig);
+
+        this.messages.add(gameOverMsg);
+        gameOverTimer.run(Constants.GAME_OVER_TIME);
+        gameOver = true;
+    }
 
 }

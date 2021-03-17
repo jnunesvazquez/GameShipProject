@@ -34,10 +34,10 @@ public class Loader {
             return Font.createFont(Font.TRUETYPE_FONT,Loader.class.getResourceAsStream(path))
                     .deriveFont(Font.PLAIN,size);
         } catch (FontFormatException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return null;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return null;
         }
     }

@@ -13,18 +13,17 @@ import java.awt.image.BufferedImage;
 
 public class Player extends MovingObject{
     private boolean spawning, visible;
-    private Timer spawnTime, flickerTime;
+    private Timer spawnTime, flickerTime, fireRate;
     private Vector2D heading;                                                               //Variable que nos dira a que posicion esta mirando la nave
     private Vector2D acceleration;
-    private Timer fireRate;
 
     public Player(Vector2D position, Vector2D velocity, double maxVelocity, BufferedImage texture, GameState gameState) {
         super(position, velocity, maxVelocity, texture, gameState);
         heading = new Vector2D(0, 1);
         acceleration = new Vector2D();
         fireRate = new Timer();
-        spawnTime=new Timer();
-        flickerTime=new Timer();
+        spawnTime = new Timer();
+        flickerTime = new Timer();
     }
 
     @Override
@@ -33,16 +32,11 @@ public class Player extends MovingObject{
             spawning = false;
             visible = true;
         }
-
         if(spawning) {
-
             if(!flickerTime.isRunning()) {
-
-                flickerTime.run(200); //sustituir pot variable
+                flickerTime.run(Constants.FLICKER_TIME);
                 visible = !visible;
-
             }
-
         }
         if (KeyBoard.SHOOT && !fireRate.isRunning() && !spawning){
             gameState.getMovingObjects().add(0, new Laser(
@@ -70,7 +64,7 @@ public class Player extends MovingObject{
             }
         }
         velocity = velocity.add(acceleration);
-        velocity.limit(maxVelocity);
+        velocity = velocity.limit(maxVelocity);
         heading = heading.setDirection(angle - Math.PI/2);
         position = position.add(velocity);
 
@@ -92,13 +86,16 @@ public class Player extends MovingObject{
     @Override
     public void destroy() {
         spawning = true;
-        spawnTime.run(3000); // añadir a cpsntantes
+        spawnTime.run(Constants.SPAWNING_TIME);
         resetValues();
-        gameState.subtractLife();
+        if(!gameState.subtractLife()) {
+            gameState.gameOver();
+            super.destroy();
+        }
+        resetValues();
     }
 
     private void resetValues() {
-
         angle = 0;
         velocity = new Vector2D();
         position = GameState.PLAYER_START_POSITION;
@@ -109,9 +106,7 @@ public class Player extends MovingObject{
             return;
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform at1 = AffineTransform.getTranslateInstance(position.getX() + width/2 + 5, position.getY() + height/2 + 10);
-        AffineTransform at2 = AffineTransform.getTranslateInstance(position.getX() + 5, position.getY() + height/2 + 10);
         at1.rotate(angle, -5, -10);
-        at2.rotate(angle, width/2 -5, -10);
         at = AffineTransform.getTranslateInstance(position.getX(), position.getY());
         at.rotate(angle, width/2, height/2);
         g2d.drawImage(Assets.player, at, null);

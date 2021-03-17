@@ -5,7 +5,7 @@ import com.project.ui.Button;
 import com.project.ui.Action;
 import constants.Constants;
 
-import java.awt.*;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class MenuState extends State{

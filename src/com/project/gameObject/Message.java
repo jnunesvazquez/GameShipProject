@@ -4,7 +4,10 @@ import com.project.graphics.Text;
 import com.project.math.Vector2D;
 import com.project.states.GameState;
 
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
 
 public class Message {
     private GameState gameState;
@@ -16,9 +19,10 @@ public class Message {
     private boolean fade; //para indicar si aparece o desaparece true=desaparece false=aparece
     private Font font; //nuestra fueste de texto
     private final float deltaAlpha = 0.01f; //valor que indica la rapidesz con la que parece y desaparece
+    private boolean dead;   //Define si el jugador esta muerto o no
 
     public Message(Vector2D position, boolean fade, String text, Color color,
-                   boolean center, Font font, GameState gameState) {
+                   boolean center, Font font) {
         this.gameState = gameState;
         this.text = text;
         this.position = position;
@@ -26,6 +30,7 @@ public class Message {
         this.center = center;
         this.fade = fade;
         this.font = font;
+        this.dead = false;
 
         if (fade == true) { //fade=true
             alpha = 1;
@@ -52,13 +57,16 @@ public class Message {
         }
         //si desaparece y alpha es menor que 0 borramos el mensaje, si aparece y alpha es mayor quw 1 borramos el mensaje
         if (fade && alpha < 0) {
-            gameState.getMessages().remove(this);
+            dead = true;
         }
 
         if (!fade && alpha > 1) {
             fade = true;
             alpha = 1;
         }
+    }
 
+    public boolean isDead() {
+        return dead;
     }
 }
