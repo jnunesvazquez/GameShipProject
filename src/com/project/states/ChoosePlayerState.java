@@ -5,6 +5,7 @@ import com.project.states.choosePlayer.Factory;
 import com.project.states.choosePlayer.IChoose;
 import com.project.ui.Action;
 import com.project.ui.Button;
+import com.project.ui.ButtonBuilder;
 import constants.Constants;
 
 import java.awt.Graphics;
@@ -26,7 +27,7 @@ public class ChoosePlayerState extends State{
         PlayerC = Factory.getPlayerFactory(Factory.PLAYER_C);
 
         buttons = new ArrayList<Button>();
-        buttons.add(new Button(
+        buttons.add(new ButtonBuilder(
                 Assets.greyButton2,
                 Assets.blueButton2,
                 Constants.WIDTH / 2 - Assets.greyButton.getWidth() / 2,
@@ -39,9 +40,9 @@ public class ChoosePlayerState extends State{
                         playerLaser = PlayerA.getLaser();
                         State.changeState(new GameState());
                     }
-                }
-        ));
-        buttons.add(new Button(
+                })
+                .build());
+        buttons.add(new ButtonBuilder(
                 Assets.greyButton2,
                 Assets.blueButton2,
                 Constants.WIDTH / 2 - Assets.greyButton.getWidth() / 2,
@@ -54,9 +55,9 @@ public class ChoosePlayerState extends State{
                         playerLaser = PlayerB.getLaser();
                         State.changeState(new GameState());
                     }
-                }
-        ));
-        buttons.add(new Button(
+                })
+                .build());
+        buttons.add(new ButtonBuilder(
                 Assets.greyButton2,
                 Assets.blueButton2,
                 Constants.WIDTH / 2 - Assets.greyButton.getWidth() / 2,
@@ -69,8 +70,8 @@ public class ChoosePlayerState extends State{
                         playerLaser = PlayerC.getLaser();
                         State.changeState(new GameState());
                     }
-                }
-        ));
+                })
+                .build());
     }
 
     @Override

@@ -16,13 +16,16 @@ public class Button {
     private Rectangle boundingBox;                      //Hitbox del boton
     private String text;                                //Texto encima del boton
     private Action action;
+    private int x, y;
 
-    public Button(BufferedImage mouseOutImage, BufferedImage mouseInImage,int x, int y, String text, Action action) {
+    public Button(BufferedImage mouseOutImage, BufferedImage mouseInImage, int x, int y, String text, Action action) {
         this.mouseOutImage = mouseOutImage;
         this.mouseInImage = mouseInImage;
-        boundingBox = new Rectangle(x, y, mouseInImage.getWidth(), mouseInImage.getHeight());
         this.text = text;
+        boundingBox = new Rectangle(x, y, mouseInImage.getWidth(), mouseInImage.getHeight());
         this.action = action;
+        this.x = x;
+        this.y = y;
     }
 
     public void update(){
@@ -36,7 +39,6 @@ public class Button {
         if (mouseIn == true && MouseInput.MOUSELEFTBUTTON){
             action.doAction();
         }
-
     }
 
     public void draw(Graphics g){
@@ -53,4 +55,59 @@ public class Button {
                 Color.BLACK,
                 Assets.fontMed);
     }
+
+    public void setBoundingBox(Rectangle boundingBox) {
+        this.boundingBox = boundingBox;
+    }
+
+
+    public BufferedImage getMouseOutImage() {
+        return mouseOutImage;
+    }
+
+    public void setMouseOutImage(BufferedImage mouseOutImage) {
+        this.mouseOutImage = mouseOutImage;
+    }
+
+    public BufferedImage getMouseInImage() {
+        return mouseInImage;
+    }
+
+    public void setMouseInImage(BufferedImage mouseInImage) {
+        this.mouseInImage = mouseInImage;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+
 }

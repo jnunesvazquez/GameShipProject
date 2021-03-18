@@ -3,6 +3,7 @@ package com.project.states;
 import com.project.graphics.Assets;
 import com.project.ui.Button;
 import com.project.ui.Action;
+import com.project.ui.ButtonBuilder;
 import constants.Constants;
 
 import java.awt.Graphics;
@@ -14,7 +15,7 @@ public class MenuState extends State{
 
     public MenuState(){
         buttons = new ArrayList<Button>();
-        buttons.add(new Button(
+        buttons.add(new ButtonBuilder(
                 Assets.greyButton,
                 Assets.blueButton,
                 Constants.WIDTH / 2 - Assets.greyButton.getWidth()/2,
@@ -25,9 +26,10 @@ public class MenuState extends State{
                     public void doAction() {
                         State.changeState(new ChoosePlayerState());
                     }
-                }
-        ));
-        buttons.add(new Button(
+                })
+                .build());
+
+        buttons.add(new ButtonBuilder(
                 Assets.greyButton,
                 Assets.blueButton,
                 Constants.WIDTH / 2 - Assets.greyButton.getWidth()/2,
@@ -38,8 +40,8 @@ public class MenuState extends State{
                     public void doAction() {
                         System.exit(0);
                     }
-                }
-        ));
+                })
+                .build());
     }
 
     @Override
