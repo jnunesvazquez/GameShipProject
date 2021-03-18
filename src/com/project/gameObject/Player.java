@@ -6,6 +6,7 @@ import com.project.math.Vector2D;
 import com.project.states.ChoosePlayerState;
 import com.project.states.GameState;
 import constants.Constants;
+import constants.Timer;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;

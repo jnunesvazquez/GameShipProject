@@ -7,7 +7,7 @@ public class Assets {
     /**
      * Creamos imagen del jugador
      */
-    public static BufferedImage player, blueLaser, greenLaser, redLaser;
+    public static BufferedImage playerA, playerB, playerC, blueLaser, greenLaser, redLaser;
     public static BufferedImage[] bigs = new BufferedImage[4];
     public static BufferedImage[] meds = new BufferedImage[2];
     public static BufferedImage[] smalls = new BufferedImage[2];

@@ -35,7 +35,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
      * Constructor de nuestra ventana
      */
     public Window(){
-        setTitle("Destructor");                                 //Metodo para definir el titulo de la ventana
+        setTitle("Hector's Destructor");                                 //Metodo para definir el titulo de la ventana
         setSize(Constants.WIDTH, Constants.HEIGHT);             //Metodo para definir el tamaño de la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);         //Metodo que nos permite cerrar la ventana
         setResizable(false);                                    //Metodo que permite o no redimensionar la ventana
