@@ -1,6 +1,6 @@
 package com.project.scores;
 
-public class Score {
+public class Score implements Comparable{
     /**
      * @param name Nombre del jugador
      * @param Score Puntuacion que consiguio en la partida
@@ -39,6 +39,22 @@ public class Score {
 
     @Override
     public String toString() {
-        return "Player= " + name + ", Score= " + score;
+        return  name + " " + score;
+    }
+
+    /**
+     * Metodo que ordena por puntuacion de mayor a menor
+     * @param o
+     * @return
+     */
+    @Override
+    public int compareTo(Object o) {
+        Score scor=(Score) o;
+        if(this.score<scor.score){
+            return 1;
+        }else if(this.score>scor.score){
+            return -1;
+        }else
+            return 0;
     }
 }
