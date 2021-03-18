@@ -28,7 +28,7 @@ public class Files {
         PrintWriter esc = null;
         try {
             esc = new PrintWriter(fi);
-            esc.println("Player= " + JOptionPane.showInputDialog("Player name") + ", Score= " + score);
+            esc.println(JOptionPane.showInputDialog("Player name")+" "+ score);
         } catch (FileNotFoundException ex) {
             System.out.println("Erro escribirNumeros " + ex.toString());
         } finally {
