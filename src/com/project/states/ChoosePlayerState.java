@@ -5,19 +5,26 @@ import com.project.states.choosePlayer.Factory;
 import com.project.states.choosePlayer.IChoose;
 import com.project.ui.Action;
 import com.project.ui.Button;
+import com.project.ui.ButtonBuilder;
 import constants.Constants;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+/**
+ * Clase para definir el menu de seleccion de nave del juego
+ */
 public class ChoosePlayerState extends State{
 
-    private ArrayList<Button> buttons;
+    private final ArrayList<Button> buttons;
 
-    private static BufferedImage playerSkin;
-    private static BufferedImage playerLaser;
+    private static BufferedImage playerSkin;        //Apariencia de la nave
+    private static BufferedImage playerLaser;       //Color del laser
 
+    /**
+     * Constructor en el que añadimos los botones con el Factory
+     */
     public ChoosePlayerState(){
 
         IChoose PlayerA, PlayerB, PlayerC;
@@ -26,7 +33,7 @@ public class ChoosePlayerState extends State{
         PlayerC = Factory.getPlayerFactory(Factory.PLAYER_C);
 
         buttons = new ArrayList<Button>();
-        buttons.add(new Button(
+        buttons.add(new ButtonBuilder(
                 Assets.greyButton2,
                 Assets.blueButton2,
                 Constants.WIDTH / 2 - Assets.greyButton.getWidth() / 2,
@@ -39,9 +46,10 @@ public class ChoosePlayerState extends State{
                         playerLaser = PlayerA.getLaser();
                         State.changeState(new GameState());
                     }
-                }
-        ));
-        buttons.add(new Button(
+                })
+                .build());
+
+        buttons.add(new ButtonBuilder(
                 Assets.greyButton2,
                 Assets.blueButton2,
                 Constants.WIDTH / 2 - Assets.greyButton.getWidth() / 2,
@@ -54,9 +62,10 @@ public class ChoosePlayerState extends State{
                         playerLaser = PlayerB.getLaser();
                         State.changeState(new GameState());
                     }
-                }
-        ));
-        buttons.add(new Button(
+                })
+                .build());
+
+        buttons.add(new ButtonBuilder(
                 Assets.greyButton2,
                 Assets.blueButton2,
                 Constants.WIDTH / 2 - Assets.greyButton.getWidth() / 2,
@@ -69,10 +78,13 @@ public class ChoosePlayerState extends State{
                         playerLaser = PlayerC.getLaser();
                         State.changeState(new GameState());
                     }
-                }
-        ));
+                })
+                .build());
     }
 
+    /**
+     * Metodo para actualizar el menu
+     */
     @Override
     public void update() {
         for(Button b: buttons) {
@@ -81,6 +93,10 @@ public class ChoosePlayerState extends State{
 
     }
 
+    /**
+     * Metodo para dibujar el menu
+     * @param g Objeto a dibujar
+     */
     @Override
     public void draw(Graphics g) {
         for(Button b: buttons) {
@@ -88,10 +104,18 @@ public class ChoosePlayerState extends State{
         }
     }
 
+    /**
+     * Getter
+     * @return Apariencia de la nave
+     */
     public static BufferedImage getPlayerSkin() {
         return playerSkin;
     }
 
+    /**
+     * Getter
+     * @return Color del laser
+     */
     public static BufferedImage getPlayerLaser() {
         return playerLaser;
     }

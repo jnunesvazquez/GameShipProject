@@ -4,6 +4,9 @@ import com.project.graphics.Assets;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Clase que devuelve la nave A
+ */
 public class PlayerA implements IChoose{
 
     @Override

@@ -4,7 +4,11 @@ import com.project.math.Vector2D;
 
 import java.awt.*;
 
+/**
+ * Clase para implementar texto en la ventana de juego
+ */
 public class Text {
+
     /**
      * Metodo para dibujar en la ventana nuestro texto
      * @param g

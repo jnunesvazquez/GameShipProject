@@ -6,6 +6,7 @@ import com.project.graphics.Window;
  * 18/03/2021
  * @author Joel Jorge Nunes Vázquez and Brais Martinez Paredes
  * Shoot'em up multi-directional shooter "Hector's Destructor"
+ * JDK version 1.8
  */
 public class Main {
 
