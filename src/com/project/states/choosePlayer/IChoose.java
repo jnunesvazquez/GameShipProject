@@ -2,9 +2,12 @@ package com.project.states.choosePlayer;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Interfaz para definir el Factory
+ */
 public interface IChoose {
 
-    public BufferedImage getPlayer();
+    BufferedImage getPlayer();
 
-    public BufferedImage getLaser();
+    BufferedImage getLaser();
 }

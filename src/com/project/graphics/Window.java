@@ -13,6 +13,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+/**
+ * Clase para implementar en nuestra ventana el estado del juego
+ */
 public class Window extends JFrame implements Runnable{         //JFrame nos permitira crear nuestra ventana de juego y Runnable para implementar un subproceso y no sobrecargar el JFrame
 
     private boolean running = false;                            //Variable que nos permite controlar el estado del juego
@@ -23,7 +26,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
     private Canvas canvas;                                      //Instanciamos la clase canvas que nos permite dibujar sobre nuestra ventana o incluso captar eventos de teclado
     private Thread thread;                                      //Instanciamos la clase de hilos para crear un subproceso en el metodo run()
 
-    private final int FPS = 60;
+    private final int FPS = 60;                                 //Fotogramas por segundo
     private double TARGETTIME = 1000000000/FPS;                 //Variable que indica el tiempo necesario para aumentar un fotograma
     private double delta = 0;                                   //Variable que almacena el tiempo transcurrido dentro de nuestro juego
     private int AVERAGEFPS = FPS;                               //Variable que indica a cuantos FPS funciona nuestro juego en un momento
@@ -35,7 +38,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
      * Constructor de nuestra ventana
      */
     public Window(){
-        setTitle("Destructor");                                 //Metodo para definir el titulo de la ventana
+        setTitle("Hector's Destructor");                                 //Metodo para definir el titulo de la ventana
         setSize(Constants.WIDTH, Constants.HEIGHT);             //Metodo para definir el tamaño de la ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);         //Metodo que nos permite cerrar la ventana
         setResizable(false);                                    //Metodo que permite o no redimensionar la ventana
@@ -72,7 +75,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
     public void draw(){
         bs = canvas.getBufferStrategy();                        //Le pasamos al canvas el buffer strategy pero nos devuelve un nulo
         if (bs == null) {
-            canvas.createBufferStrategy(3);
+            canvas.createBufferStrategy(3);                   //Reservamos tres espacios de memoria para la carga de imagenes y evitar fallos de rendimiento
             return;
         }
         g = bs.getDrawGraphics();
@@ -80,16 +83,16 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
         //Aqui dibujamos
         g.setColor(Color.BLACK);
 
-        g.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
+        g.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);        //Creamos el espacio sobre el que dibujar
 
         State.getCurrentState().draw(g);
 
         g.setColor(Color.WHITE);
 
-        g.drawString("" + AVERAGEFPS, 10, 20);
+        g.drawString("" + AVERAGEFPS, 10, 20);                  //Para mostrar los fotogramas en pantalla
 
         //------------------------------
-        g.dispose();
+        g.dispose();                                                    //Equivale al System.exit pero solo de la ventana JFrame
         bs.show();
     }
 
@@ -115,16 +118,17 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
 
         //este bucle restringe el tiempo a 60 fps
         while (running){
-            now = System.nanoTime();
-            delta += (now - lastTime) / TARGETTIME;                          //Sumamos el tiempo que haya pasado hasta este momento
+            now = System.nanoTime();                                         //Este valor va a ser diferente al de lastTime
+            delta += (now - lastTime) / TARGETTIME;                          //Sumamos el tiempo que haya pasado hasta este momento / Su resultado equivale a 1
             time += (now - lastTime);
             lastTime = now;
-            if (delta >= 1){
+            if (delta >= 1){                                                 //Este bucle establece que se dibuje y se actualice cada fotograma
                 update();
                 draw();
                 delta--;
                 frames++;
             }
+            //Por cada segundo de juego, los fotogramas equivalen a 60 FPS
             if (time >= 1000000000){
                 AVERAGEFPS = frames;
                 frames = 0;

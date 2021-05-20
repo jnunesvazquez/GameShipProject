@@ -4,6 +4,9 @@ import com.project.graphics.Assets;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Clase que devuelve la nave B
+ */
 public class PlayerB implements IChoose{
 
     public BufferedImage getPlayer() {

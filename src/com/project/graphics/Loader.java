@@ -5,7 +5,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/**
+ * Clase para cargar nuestros Assets dentro del juego
+ */
 public class Loader {
+
     /**
      * Se encarga de cargar los archivos de sonido,imagenes.
      * @param path Nombre del archivo a cargar.

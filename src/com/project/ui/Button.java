@@ -8,6 +8,9 @@ import com.project.math.Vector2D;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Clase para construir los botones del menu
+ */
 public class Button {
 
     private BufferedImage mouseOutImage;                //Imagen que muestra cuando el raton no esta encima del boton
@@ -15,99 +18,52 @@ public class Button {
     private boolean mouseIn;                            //Indica si el raton esta encima de un boton o no
     private Rectangle boundingBox;                      //Hitbox del boton
     private String text;                                //Texto encima del boton
-    private Action action;
-    private int x, y;
+    private Action action;                              //Accion que le aplicaremos al boton que creemos
 
-    public Button(BufferedImage mouseOutImage, BufferedImage mouseInImage, int x, int y, String text, Action action) {
+    /**
+     * Constructor
+     * @param mouseOutImage Imagen sin el raton encima
+     * @param mouseInImage  Imagen con el raton encima
+     * @param x Primera coordena
+     * @param y Segunda coordenada
+     * @param text  Texto del boton
+     * @param action    Accion del boton
+     */
+    public Button(BufferedImage mouseOutImage, BufferedImage mouseInImage,int x, int y, String text, Action action) {
         this.mouseOutImage = mouseOutImage;
         this.mouseInImage = mouseInImage;
-        this.text = text;
         boundingBox = new Rectangle(x, y, mouseInImage.getWidth(), mouseInImage.getHeight());
+        this.text = text;
         this.action = action;
-        this.x = x;
-        this.y = y;
     }
 
+    /**
+     * Metodo para actualizar nuestros botones
+     */
     public void update(){
-        if (boundingBox.contains(MouseInput.X, MouseInput.Y)){                      //Devuelve verdadero si las coordenadas del raton estan encima de un objetos
-            mouseIn = true;
-        }
-        else {
-            mouseIn = false;
-        }
-
-        if (mouseIn == true && MouseInput.MOUSELEFTBUTTON){
+                                //Si la posicion del raton esta encima de un boton
+        mouseIn = boundingBox.contains(MouseInput.X, MouseInput.Y);
+        if (mouseIn && MouseInput.MOUSELEFTBUTTON){
             action.doAction();
         }
     }
 
+    /**
+     * Metodo para dibujar nuestros botones
+     * @param g Objeto a dibujar
+     */
     public void draw(Graphics g){
-        if (mouseIn == true){
+        if (mouseIn){                                                           //Lo dejamos en null para que no se modifique la imagen despues de haber sido creada
             g.drawImage(mouseInImage, boundingBox.x, boundingBox.y, null);
         }
         else {
             g.drawImage(mouseOutImage, boundingBox.x, boundingBox.y, null);
         }
-        Text.drawText(g, text, new Vector2D(
+        Text.drawText(g, text, new Vector2D(                                //Dibujamos el texto encima del boton
                     boundingBox.getX() + boundingBox.getWidth() / 2,
                     boundingBox.getY() + boundingBox.getHeight()),
                 true,
                 Color.BLACK,
                 Assets.fontMed);
     }
-
-    public void setBoundingBox(Rectangle boundingBox) {
-        this.boundingBox = boundingBox;
-    }
-
-
-    public BufferedImage getMouseOutImage() {
-        return mouseOutImage;
-    }
-
-    public void setMouseOutImage(BufferedImage mouseOutImage) {
-        this.mouseOutImage = mouseOutImage;
-    }
-
-    public BufferedImage getMouseInImage() {
-        return mouseInImage;
-    }
-
-    public void setMouseInImage(BufferedImage mouseInImage) {
-        this.mouseInImage = mouseInImage;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public Action getAction() {
-        return action;
-    }
-
-    public void setAction(Action action) {
-        this.action = action;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-
 }
