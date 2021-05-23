@@ -1,6 +1,7 @@
 package com.project.states;
 
 import java.awt.*;
+import java.sql.SQLException;
 
 /**
  * Clase abstracta para definir un estado
@@ -28,7 +29,7 @@ public abstract class State {
     /**
      * Metodo para actualizar un estado
      */
-    public abstract void update();
+    public abstract void update() throws SQLException;
 
     /**
      * Metodo para dibujar sobre un estado

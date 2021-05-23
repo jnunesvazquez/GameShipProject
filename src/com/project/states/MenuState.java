@@ -7,6 +7,7 @@ import com.project.ui.ButtonBuilder;
 import constants.Constants;
 
 import java.awt.Graphics;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MenuState extends State{
@@ -36,7 +37,7 @@ public class MenuState extends State{
                 Constants.HIGHSCORE,
                 new Action() {
                     @Override
-                    public void doAction() {
+                    public void doAction() throws SQLException {
                         changeState(new ScoreState());
                     }
                 })
@@ -57,7 +58,7 @@ public class MenuState extends State{
     }
 
     @Override
-    public void update() {
+    public void update() throws SQLException {
         for(Button b: buttons) {
             b.update();
         }

@@ -7,29 +7,21 @@ public class ScoreData {
 
     private int id;
     private String name;
-    private static String ship;
+    private String ship;
     private int score;
     private int wave;
 
     public ScoreData() {}
 
-    public ScoreData(int id, int score){
+    public ScoreData(int id, String name, String ship, int wave, int score){
         this.id = id;
         this.score = score;
-        ship = getShip();
+        this.ship = ship;
+        this.name = name;
+        this.wave = wave;
     }
 
     public String getShip(){
-        String ship = "? Ship";
-        if (Factory.getPlayerFactory(Factory.PLAYER_A) instanceof Player){
-            ship = "Ship A";
-        }
-        else if (Factory.getPlayerFactory(Factory.PLAYER_B) instanceof Player){
-            ship = "Ship B";
-        }
-        else if (Factory.getPlayerFactory(Factory.PLAYER_C) instanceof Player){
-            ship = "Ship C";
-        }
         return ship;
     }
 
@@ -49,8 +41,8 @@ public class ScoreData {
         this.name = name;
     }
 
-    public static void setShip(String ship) {
-        ScoreData.ship = ship;
+    public void setShip(String ship) {
+        this.ship = ship;
     }
 
     public int getScore() {

@@ -4,16 +4,18 @@ import com.project.graphics.Assets;
 import com.project.graphics.Text;
 import com.project.io.ScoreData;
 import com.project.math.Vector2D;
-import com.project.states.choosePlayer.PlayerB;
 import com.project.ui.Action;
 import com.project.ui.Button;
 import com.project.ui.ButtonBuilder;
 import constants.Constants;
 
 import java.awt.*;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ScoreState extends State{
 
@@ -25,7 +27,12 @@ public class ScoreState extends State{
 
     private ScoreData [] auxArray;
 
-    public ScoreState(){
+    Connection cn;
+
+    public ScoreState() throws SQLException {
+
+        cn = DriverManager.getConnection("jdbc:mysql://localhost/gameship", "root", "");
+        PreparedStatement pst = cn.prepareStatement("select * from score");
         returnButton = new ButtonBuilder(
                 Assets.greyButton,
                 Assets.blueButton,
@@ -36,6 +43,11 @@ public class ScoreState extends State{
                     @Override
                     public void doAction() {
                         State.changeState(new MenuState());
+                        try {
+                            pst.close();
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
                     }
                 })
                 .build();
@@ -48,11 +60,23 @@ public class ScoreState extends State{
         };
         highScores = new PriorityQueue<ScoreData>(10, scoreComparator);
 
-        highScores.add(new ScoreData(1,1000));
+        try {
+            ResultSet rs = pst.executeQuery();
+            for (int i = 0; rs.next() == true; i++){
+                highScores.add(new ScoreData(
+                        rs.getInt("ID"),
+                        rs.getString("nombre"),
+                        rs.getString("nave"),
+                        rs.getInt("oleada"),
+                        rs.getInt("puntuacion")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ScoreState.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
-    public void update() {
+    public void update() throws SQLException {
         returnButton.update();
     }
 
@@ -64,30 +88,46 @@ public class ScoreState extends State{
 
         Arrays.sort(auxArray, scoreComparator);
 
-        Vector2D scorePos = new Vector2D(
+        Vector2D namePos = new Vector2D(
                 Constants.WIDTH / 2 - 200,
                 100
         );
-        Vector2D idPos = new Vector2D(
-                Constants.WIDTH / 2 - 300,
+        Vector2D shipPos = new Vector2D(
+                Constants.WIDTH / 2 - 50,
+                100
+        );
+        Vector2D wavePos = new Vector2D(
+                Constants.WIDTH / 2 + 100,
+                100
+        );
+        Vector2D scorePos = new Vector2D(
+                Constants.WIDTH / 2 + 250,
                 100
         );
 
         Text.drawText(g, "SCORE", scorePos, true, Color.ORANGE, Assets.fontMed);
-        Text.drawText(g, "ID", idPos, true, Color.ORANGE, Assets.fontMed);
+        Text.drawText(g, "NAME", namePos, true, Color.ORANGE, Assets.fontMed);
+        Text.drawText(g, "SHIP", shipPos, true, Color.ORANGE, Assets.fontMed);
+        Text.drawText(g, "WAVE", wavePos, true, Color.ORANGE, Assets.fontMed);
 
         scorePos.setY(scorePos.getY() + 40);
-        idPos.setY(idPos.getY() + 40);
+        namePos.setY(namePos.getY() + 40);
+        shipPos.setY(shipPos.getY() + 40);
+        wavePos.setY(wavePos.getY() + 40);
 
         for (int i = auxArray.length - 1; i > -1; i--){
 
             ScoreData d = auxArray[i];
 
             Text.drawText(g, Integer.toString(d.getScore()), scorePos, true, Color.WHITE, Assets.fontMed);
-            Text.drawText(g, Integer.toString(d.getId()), idPos, true, Color.WHITE, Assets.fontMed);
+            Text.drawText(g, d.getName(), namePos, true, Color.WHITE, Assets.fontMed);
+            Text.drawText(g, d.getShip(), shipPos, true, Color.WHITE, Assets.fontMed);
+            Text.drawText(g, Integer.toString(d.getWave()), wavePos, true, Color.WHITE, Assets.fontMed);
 
             scorePos.setY(scorePos.getY() + 40);
-            idPos.setY(idPos.getY() + 40);
+            namePos.setY(namePos.getY() + 40);
+            shipPos.setY(shipPos.getY() + 40);
+            wavePos.setY(wavePos.getY() + 40);
         }
     }
 }
