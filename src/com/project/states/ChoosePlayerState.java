@@ -10,6 +10,7 @@ import constants.Constants;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -85,7 +86,7 @@ public class ChoosePlayerState extends State{
      * Metodo para actualizar el menu
      */
     @Override
-    public void update() {
+    public void update() throws SQLException {
         for(Button b: buttons) {
             b.update();
         }

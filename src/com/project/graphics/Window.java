@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.sql.SQLException;
 
 /**
  * Clase para implementar en nuestra ventana el estado del juego
@@ -64,7 +65,7 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
     /**
      * Metodo que nos permite actualizar las interacciones o procesos secundarios durante el proceso principal
      */
-    public void update() {
+    public void update() throws SQLException {
         keyBoard.update();
         State.getCurrentState().update();
     }
@@ -123,7 +124,11 @@ public class Window extends JFrame implements Runnable{         //JFrame nos per
             time += (now - lastTime);
             lastTime = now;
             if (delta >= 1){                                                 //Este bucle establece que se dibuje y se actualice cada fotograma
-                update();
+                try {
+                    update();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
                 draw();
                 delta--;
                 frames++;

@@ -7,6 +7,7 @@ import com.project.math.Vector2D;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.sql.SQLException;
 
 /**
  * Clase para construir los botones del menu
@@ -40,7 +41,7 @@ public class Button {
     /**
      * Metodo para actualizar nuestros botones
      */
-    public void update(){
+    public void update() throws SQLException {
                                 //Si la posicion del raton esta encima de un boton
         mouseIn = boundingBox.contains(MouseInput.X, MouseInput.Y);
         if (mouseIn && MouseInput.MOUSELEFTBUTTON){
