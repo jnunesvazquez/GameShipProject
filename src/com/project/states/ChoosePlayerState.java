@@ -21,7 +21,6 @@ public class ChoosePlayerState extends State{
 
     private static BufferedImage playerSkin;        //Apariencia de la nave
     private static BufferedImage playerLaser;       //Color del laser
-
     /**
      * Constructor en el que añadimos los botones con el Factory
      */

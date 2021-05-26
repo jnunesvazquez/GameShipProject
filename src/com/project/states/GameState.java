@@ -1,5 +1,6 @@
 package com.project.states;
 
+import com.project.BD.ConnectionBD;
 import com.project.gameObject.Message;
 import com.project.gameObject.Meteor;
 import com.project.gameObject.MovingObject;
@@ -10,6 +11,7 @@ import com.project.scores.Files;
 import constants.Constants;
 import constants.Timer;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -32,6 +34,9 @@ public class GameState extends State{
 
     private Timer gameOverTimer;                                        //Duracion del game over
     private boolean gameOver;                                           //Estado del game over
+
+    ConnectionBD cn=new ConnectionBD();                                 // Instanciamos la clase ConnectionBD
+    ChoosePlayerState cps=new ChoosePlayerState();
 
     public static final Vector2D PLAYER_START_POSITION = new Vector2D(Constants.WIDTH/2 - ChoosePlayerState.getPlayerSkin().getWidth()/2,       //Posicion inicial de la nave
             Constants.HEIGHT/2 - ChoosePlayerState.getPlayerSkin().getHeight()/2);
@@ -114,7 +119,13 @@ public class GameState extends State{
         }
 
         if(gameOver && !gameOverTimer.isRunning()) {                //Cuando se active el game over, se regresa a la pantalla de menu
-            Files.scoreWriteFinal(score);
+            String name= JOptionPane.showInputDialog("Player name");//Pido el nombre del jugador
+            if(cn.getConnectionBD()!=null){                         //si conecyion es distinto de null que lo guarde en la vase de datos
+                Files.scoreWriteFinal(score,name);                  //meto nombre y puntuacion en un fichero y en la BD
+                cn.addScoreBD(score, waves,name,set());
+            }else{                                                  //en caso contrario en un txt
+                Files.scoreWriteFinal(score,name);                  //meto nombre y puntuacion en un fichero
+            }
             State.changeState(new MenuState());
         }
 
@@ -220,5 +231,23 @@ public class GameState extends State{
         this.messages.add(gameOverMsg);
         gameOverTimer.run(Constants.GAME_OVER_TIME);
         gameOver = true;
+    }
+
+    /**
+     * Metodo para conseguir el modelo de la nave
+     * @return Devuelve una String con el tipo de la nave
+     */
+    public String set() {
+        String ship = null;
+        if (ChoosePlayerState.getPlayerSkin() == Assets.playerA){
+            ship = "Ship A";
+        }
+        else if (ChoosePlayerState.getPlayerSkin() == Assets.playerB){
+            ship = "Ship B";
+        }
+        else if (ChoosePlayerState.getPlayerSkin() == Assets.playerC){
+            ship = "Ship C";
+        }
+        return ship;
     }
 }

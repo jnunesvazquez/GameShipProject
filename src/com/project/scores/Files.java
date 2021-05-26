@@ -23,14 +23,15 @@ public class Files {
      * Con este metodo creo y escribo un fichero con el nombre y puntiacion del jugador
      * @param nameFile Aqui recive la ruta y nombre del archivo a creal
      * @param score Aqui recive la puntuacion que obtuvo en la partida
+     * @param name Nombre del jugador
      */
-    private static void writeScore(String nameFile, int score) {
+    private static void writeScore(String nameFile, int score, String name) {
 
         File fi = new File(nameFile + ".txt");
         PrintWriter esc = null;
         try {
             esc = new PrintWriter(fi);
-            esc.println(JOptionPane.showInputDialog("Player name")+" "+ score);
+            esc.println(name+" "+ score);
         } catch (FileNotFoundException ex) {
             System.out.println("Erro escribirNumeros " + ex.toString());
         } finally {
@@ -42,14 +43,15 @@ public class Files {
      * Este metodo lee el fichero ya esistente y en la ultima parte añade el nombre y la puntuacion del jugador
      * @param nomeFich Aqui recive la ruta y nombre del archivo
      * @param score Aqui recive la puntuacion que obtuvo en la partida
+     * @param name Nombre del jugador
      */
-    private static void readAndWrite(String nomeFich, int score) {
+    private static void readAndWrite(String nomeFich, int score, String name) {
         PrintWriter f = null;
         File fich;
         try {
             FileWriter eng = new FileWriter(new File(nomeFich + ".txt"), true);
             f = new PrintWriter(eng);
-            Score p = new Score(JOptionPane.showInputDialog("Player name"), score);
+            Score p = new Score(name, score);
             f.println(p);
         } catch (IOException ex) {
             System.out.println("Erro" + ex.getMessage());
@@ -78,12 +80,13 @@ public class Files {
      * Metodo que si el archivo donde guardar la partida existe se pondra en la ultima parte y escribira los nuevos
      * datos, en caso contrario creara el erchivo y escribira los datos
      * @param score recibe la puntuacion que consiguio el jugador en la partidda
+     * @param name Nombre del jugador
      */
-    public static void scoreWriteFinal(int score) {
+    public static void scoreWriteFinal(int score, String name) {
         if (checkFile() == true) {
-            writeAndOrderScore(desktop() + "Puntuacion", score);
+            writeAndOrderScore(desktop() + "Puntuacion", score, name);
         } else {
-            writeScore(desktop() + "Puntuacion", score);
+            writeScore(desktop() + "Puntuacion", score ,name);
         }
     }
 
@@ -91,9 +94,10 @@ public class Files {
      * Metodo que lee, ecribe la nueva puntuación y ordena por puntuacion
      * @param nameFich nombre del fichero a usar
      * @param score puntuacion conseguida por el nuevo jugador
+     * @param name Nombre del jugador
      */
-    private static void writeAndOrderScore(String nameFich,int score){
-        readAndWrite(nameFich,score);           //introducir nueva puntuación
+    private static void writeAndOrderScore(String nameFich,int score, String name){
+        readAndWrite(nameFich,score,name);           //introducir nueva puntuación
         //Leer fichero e introducir valores en un array tipo Score
         File fich;
         Scanner sc=null;
