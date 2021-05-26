@@ -3,12 +3,18 @@ package com.project.input;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * Clase para poder interactuar con el teclado
+ */
 public class KeyBoard extends KeyAdapter {
     //Le asociamos este tamaño porque equivale a la cantidad de elementos que posee el teclado
     private boolean [] keys = new boolean[256];
 
     public static boolean UP, LEFT, RIGHT, SHOOT;
 
+    /**
+     * Constructor
+     */
     public KeyBoard(){
         UP = false;
         LEFT = false;
@@ -16,6 +22,9 @@ public class KeyBoard extends KeyAdapter {
         SHOOT = false;
     }
 
+    /**
+     * Metodo para actualizar nuestras interacciones con teclado
+     */
     public void update(){
         UP = keys [KeyEvent.VK_UP];
         LEFT = keys [KeyEvent.VK_LEFT];

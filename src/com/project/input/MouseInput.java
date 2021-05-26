@@ -3,6 +3,9 @@ package com.project.input;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Clase para poder interactuar con el raton
+ */
 public class MouseInput extends MouseAdapter {
 
     public static int X, Y;

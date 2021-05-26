@@ -1,5 +1,8 @@
 package com.project.scores;
 
+/**
+ * Clase para crear nuestra puntuacion
+ */
 public class Score implements Comparable{
     /**
      * @param name Nombre del jugador
@@ -8,32 +11,13 @@ public class Score implements Comparable{
     private String name;
     private int score;
 
-    public Score() {
-    }
-
     /**
-     *
+     * Constructor
      * @param name Nombre del jugador
      * @param score Puntuacion de la partida
      */
     public Score(String name, int score) {
         this.name = name;
-        this.score = score;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
         this.score = score;
     }
 

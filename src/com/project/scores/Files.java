@@ -1,6 +1,5 @@
 package com.project.scores;
 
-
 import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -8,9 +7,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Clase para imprimir archivos donde guardar nuestras puntuaciones
+ */
 public class Files {
     /**
-     * Con este metodo pido la ruta del usuario y le eñado a la ruta Desktop
+     * Con este metodo pido la ruta del usuario y le añado a la ruta Desktop
      * @return retorno la ruta del escritorio
      */
     private static String desktop() {
@@ -18,7 +20,7 @@ public class Files {
     }
 
     /**
-     * Con este metodo creo y escribo un ficjero con el nombre y puntiacion del jugador
+     * Con este metodo creo y escribo un fichero con el nombre y puntiacion del jugador
      * @param nameFile Aqui recive la ruta y nombre del archivo a creal
      * @param score Aqui recive la puntuacion que obtuvo en la partida
      */

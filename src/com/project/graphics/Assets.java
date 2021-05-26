@@ -3,14 +3,17 @@ package com.project.graphics;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Clase para escoger los Assets que vamos a utilizar
+ */
 public class Assets {
+
     /**
      * Creamos imagen del jugador
      */
-    public static BufferedImage player, blueLaser, greenLaser, redLaser;
+    public static BufferedImage playerA, playerB, playerC, blueLaser, greenLaser, redLaser;
     public static BufferedImage[] bigs = new BufferedImage[4];
     public static BufferedImage[] meds = new BufferedImage[2];
-    public static BufferedImage[] smalls = new BufferedImage[2];
 
     //fuentes/fonts
     public static Font fontBig;
@@ -20,15 +23,19 @@ public class Assets {
     public static BufferedImage[] numbers = new BufferedImage[11];
     public static BufferedImage life;
 
-    // ui
+    // interfaz
     public static BufferedImage blueButton;
     public static BufferedImage greyButton;
+    public static BufferedImage blueButton2;
+    public static BufferedImage greyButton2;
 
     /**
-     * Le asociamos imagen de aspecto al jugador
+     * Le asociamos imagen de aspecto a los objetos
      */
     public static void init(){
-        player = Loader.imageLoader("/ships/player.png");
+        playerA = Loader.imageLoader("/ships/player_a.png");
+        playerB = Loader.imageLoader("/ships/player_b.png");
+        playerC = Loader.imageLoader("/ships/player_c.png");
         blueLaser = Loader.imageLoader("/lasers/laserBlue01.png");
         greenLaser = Loader.imageLoader("/lasers/laserGreen11.png");
         redLaser = Loader.imageLoader("/lasers/laserRed01.png");
@@ -37,6 +44,9 @@ public class Assets {
         fontMed = Loader.loadFont("/fonts/futureFont.ttf",20); //Para mensajes no tan grandes
         greyButton = Loader.imageLoader("/ui/grey_button.png");     //Boton gris
         blueButton = Loader.imageLoader("/ui/blue_button.png");     //Boton azul
+        greyButton2 = Loader.imageLoader("/ui/grey_button2.png");     //Boton gris
+        blueButton2 = Loader.imageLoader("/ui/blue_button2.png");     //Boton azul
+
         for(int i = 0; i < numbers.length; i++)
             numbers[i] = Loader.imageLoader("/numbers/"+i+".png");
         for(int i = 0; i < bigs.length; i++){
@@ -44,9 +54,6 @@ public class Assets {
         }
         for(int i = 0; i < meds.length; i++){
             meds[i] = Loader.imageLoader("/meteors/med" + (i + 1) + ".png");
-        }
-        for(int i = 0; i < smalls.length; i++){
-            smalls[i] = Loader.imageLoader("/meteors/small" + (i + 1) + ".png");
         }
     }
 }
