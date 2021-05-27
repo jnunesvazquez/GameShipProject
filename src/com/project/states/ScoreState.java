@@ -38,7 +38,7 @@ public class ScoreState extends State{
                 Assets.blueButton,
                 Assets.greyButton.getHeight(),
                 Constants.HEIGHT / 2 + Assets.greyButton.getHeight() * 3,
-                Constants.RETURN,
+                "RETURN",
                 new Action() {
                     @Override
                     public void doAction() {

@@ -34,7 +34,7 @@ public class MenuState extends State{
                 Assets.blueButton,
                 Constants.WIDTH / 2 - Assets.greyButton.getWidth() / 2,
                 Constants.HEIGHT / 2 - Assets.greyButton.getHeight(),
-                Constants.HIGHSCORE,
+                "HIGHSCORE",
                 new Action() {
                     @Override
                     public void doAction() throws SQLException {
